@@ -1,0 +1,582 @@
+<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>SpringMVC学习笔记 | Kei's Blog</title><meta name=keywords content="java,springmvc"><meta name=description content="1 简介 1.1 定义 首先，MVC是模型（Model），视图（View），控制器（Controller）的简写，是一种软件设计规范 模型（Dao，Ser"><meta name=author content="kei"><link rel=canonical href=https://h-jch.github.io/posts/code/study-springmvc/><link crossorigin=anonymous href=/assets/css/stylesheet.678b5c47efa744d2e0dd0d61101075e6aecdc9a0631e7ad8538f4ec0cca79273.css integrity="sha256-Z4tcR++nRNLg3Q1hEBB15q7NyaBjHnrYU49OwMynknM=" rel="preload stylesheet" as=style><script defer crossorigin=anonymous src=/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG+9vmJ0cTS+ovo0FeA=" onload=hljs.initHighlightingOnLoad()></script>
+<link rel=icon href=https://h-jch.github.io/images/avatar.png><link rel=icon type=image/png sizes=16x16 href=https://h-jch.github.io/images/avatar.png><link rel=icon type=image/png sizes=32x32 href=https://h-jch.github.io/images/avatar.png><link rel=apple-touch-icon href=https://h-jch.github.io/images/avatar.png><link rel=mask-icon href=https://h-jch.github.io/images/avatar.png><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><meta property="og:title" content="SpringMVC学习笔记"><meta property="og:description" content="1 简介 1.1 定义 首先，MVC是模型（Model），视图（View），控制器（Controller）的简写，是一种软件设计规范 模型（Dao，Ser"><meta property="og:type" content="article"><meta property="og:url" content="https://h-jch.github.io/posts/code/study-springmvc/"><meta property="og:image" content="https://h-jch.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-07-19T00:41:40+08:00"><meta property="article:modified_time" content="2020-07-19T00:41:40+08:00"><meta property="og:site_name" content="Kei's Blog"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://h-jch.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E"><meta name=twitter:title content="SpringMVC学习笔记"><meta name=twitter:description content="1 简介 1.1 定义 首先，MVC是模型（Model），视图（View），控制器（Controller）的简写，是一种软件设计规范 模型（Dao，Ser"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"name":"Posts","item":"https://h-jch.github.io/posts/"},{"@type":"ListItem","position":3,"name":"SpringMVC学习笔记","item":"https://h-jch.github.io/posts/code/study-springmvc/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"SpringMVC学习笔记","name":"SpringMVC学习笔记","description":"1 简介 1.1 定义 首先，MVC是模型（Model），视图（View），控制器（Controller）的简写，是一种软件设计规范 模型（Dao，Ser","keywords":["java","springmvc"],"articleBody":"1 简介 1.1 定义 首先，MVC是模型（Model），视图（View），控制器（Controller）的简写，是一种软件设计规范\n模型（Dao，Service） 视图（jsp/html） 控制器（Servlet） SpringMVC是Spring Framework的一部分，是基于Java实现MVC的轻量级Web框架\n1.2 设计 Spring的web框架围绕DIspatcherServlet设计，DispatcherServlet的作用是将请求分发到不同处理器，整个框架围绕一个中心Servlet分派请求并提供其他功能\n2 HelloSpringMVC 2.1 xml配置 导入SpringMVC的依赖\n在WEB-INF/jsp下创建hello.jsp\n1 2 3 ${msg} 配置web.xml，注册DispatcherServlet 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 springmvc org.springframework.web.servlet.DispatcherServlet contextConfigLocation classpath:springmvc-servelt.xml 1 springmvc / 配置springmvc-servlet.xml 1 2 3 4 5 6 7 8 9 ","wordCount":"5139","inLanguage":"en","datePublished":"2020-07-19T00:41:40+08:00","dateModified":"2020-07-19T00:41:40+08:00","author":[{"@type":"Person","name":"kei"}],"mainEntityOfPage":{"@type":"WebPage","@id":"https://h-jch.github.io/posts/code/study-springmvc/"},"publisher":{"@type":"Organization","name":"Kei's Blog","logo":{"@type":"ImageObject","url":"https://h-jch.github.io/images/avatar.png"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://h-jch.github.io accesskey=h title="Kei's Blog (Alt + H)"><img src=https://h-jch.github.io/images/avatar.png alt aria-label=logo height=35>Kei's Blog</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://h-jch.github.io/categories/ title=Categories><span>Categories</span></a></li><li><a href=https://h-jch.github.io/tags/ title=Tags><span>Tags</span></a></li><li><a href=https://h-jch.github.io/archives/ title=Archives><span>Archives</span></a></li><li><a href=https://h-jch.github.io/about/ title=About><span>About</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class=post-title>SpringMVC学习笔记</h1><div class=post-meta><span title='2020-07-19 00:41:40 +0800 CST'>2020-07-19</span>&nbsp;·&nbsp;11 min&nbsp;·&nbsp;5139 words&nbsp;·&nbsp;kei</div></header><aside id=toc-container class="toc-container wide"><div class=toc><details open><summary accesskey=c title="(Alt + C)"><span class=details>Table of Contents</span></summary><div class=inner><ul><li><a href=#1-%e7%ae%80%e4%bb%8b aria-label="1 简介">1 简介</a><ul><li><a href=#11-%e5%ae%9a%e4%b9%89 aria-label="1.1 定义">1.1 定义</a></li><li><a href=#12-%e8%ae%be%e8%ae%a1 aria-label="1.2 设计">1.2 设计</a></li></ul></li><li><a href=#2-hellospringmvc aria-label="2 HelloSpringMVC">2 HelloSpringMVC</a><ul><li><a href=#21-xml%e9%85%8d%e7%bd%ae aria-label="2.1 xml配置">2.1 xml配置</a></li><li><a href=#22-%e6%b3%a8%e8%a7%a3%e9%85%8d%e7%bd%ae aria-label="2.2 注解配置">2.2 注解配置</a></li></ul></li><li><a href=#3-controller%e7%9b%b8%e5%85%b3%e9%85%8d%e7%bd%ae aria-label="3. Controller相关配置">3. Controller相关配置</a><ul><li><a href=#31-controller aria-label="3.1 @Controller">3.1 @Controller</a></li><li><a href=#32-requestmapping aria-label="3.2 @RequestMapping">3.2 @RequestMapping</a></li><li><a href=#33-%e6%96%b9%e6%b3%95%e8%bf%94%e5%9b%9estring aria-label="3.3 方法返回String">3.3 方法返回String</a></li></ul></li><li><a href=#4-restful%e9%a3%8e%e6%a0%bc aria-label="4 RESTful风格">4 RESTful风格</a><ul><li><a href=#41-%e6%a6%82%e5%bf%b5 aria-label="4.1 概念">4.1 概念</a></li><li><a href=#42-%e5%8a%9f%e8%83%bd aria-label="4.2 功能">4.2 功能</a></li><li><a href=#43-%e4%bc%98%e7%82%b9 aria-label="4.3 优点">4.3 优点</a></li></ul></li><li><a href=#5-%e7%bb%93%e6%9e%9c%e8%b7%b3%e8%bd%ac%e6%96%b9%e5%bc%8f aria-label="5 结果跳转方式">5 结果跳转方式</a><ul><li><a href=#51-modelandview aria-label="5.1 ModelAndView">5.1 ModelAndView</a></li><li><a href=#52-servletapi aria-label="5.2 ServletAPI">5.2 ServletAPI</a></li><li><a href=#53-springmvc%e5%ae%9e%e7%8e%b0%e8%bd%ac%e5%8f%91%e5%92%8c%e9%87%8d%e5%ae%9a%e5%90%91 aria-label="5.3 SpringMVC实现转发和重定向">5.3 SpringMVC实现转发和重定向</a></li></ul></li><li><a href=#6-%e6%95%b0%e6%8d%ae%e5%a4%84%e7%90%86 aria-label="6 数据处理">6 数据处理</a><ul><li><a href=#61-%e6%95%b0%e6%8d%ae%e4%bb%8e%e5%89%8d%e7%ab%af%e5%88%b0%e6%8e%a7%e5%88%b6%e5%99%a8 aria-label="6.1 数据从前端到控制器">6.1 数据从前端到控制器</a></li><li><a href=#62-%e6%95%b0%e6%8d%ae%e4%bb%8e%e6%8e%a7%e5%88%b6%e5%99%a8%e5%88%b0%e5%89%8d%e7%ab%af aria-label="6.2 数据从控制器到前端">6.2 数据从控制器到前端</a></li></ul></li><li><a href=#7-%e4%b9%b1%e7%a0%81%e9%97%ae%e9%a2%98 aria-label="7 乱码问题">7 乱码问题</a></li><li><a href=#8-json aria-label="8 JSON">8 JSON</a><ul><li><a href=#81-%e6%a6%82%e5%bf%b5 aria-label="8.1 概念">8.1 概念</a></li><li><a href=#82-%e8%af%ad%e6%b3%95 aria-label="8.2 语法">8.2 语法</a></li><li><a href=#83-controller%e8%bf%94%e5%9b%9ejson%e6%95%b0%e6%8d%ae aria-label="8.3 Controller返回JSON数据">8.3 Controller返回JSON数据</a></li></ul></li><li><a href=#9-%e6%8b%a6%e6%88%aa%e5%99%a8 aria-label="9 拦截器">9 拦截器</a><ul><li><a href=#91-%e8%87%aa%e5%ae%9a%e4%b9%89%e6%8b%a6%e6%88%aa%e5%99%a8 aria-label="9.1 自定义拦截器">9.1 自定义拦截器</a></li><li><a href=#92-%e6%8b%a6%e6%88%aa%e5%99%a8%e5%ae%9e%e7%8e%b0%e7%99%bb%e9%99%86%e5%88%a4%e6%96%ad%e9%aa%8c%e8%af%81 aria-label="9.2 拦截器实现登陆判断验证">9.2 拦截器实现登陆判断验证</a></li></ul></li></ul></div></details></div></aside><script>let activeElement,elements;window.addEventListener("DOMContentLoaded",function(){checkTocPosition(),elements=document.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]"),activeElement=elements[0];const t=encodeURI(activeElement.getAttribute("id")).toLowerCase();document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active")},!1),window.addEventListener("resize",function(){checkTocPosition()},!1),window.addEventListener("scroll",()=>{activeElement=Array.from(elements).find(e=>{if(getOffsetTop(e)-window.pageYOffset>0&&getOffsetTop(e)-window.pageYOffset<window.innerHeight/2)return e})||activeElement,elements.forEach(e=>{const t=encodeURI(e.getAttribute("id")).toLowerCase();e===activeElement?document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active"):document.querySelector(`.inner ul li a[href="#${t}"]`).classList.remove("active")})},!1);const main=parseInt(getComputedStyle(document.body).getPropertyValue("--article-width"),10),toc=parseInt(getComputedStyle(document.body).getPropertyValue("--toc-width"),10),gap=parseInt(getComputedStyle(document.body).getPropertyValue("--gap"),10);function checkTocPosition(){const e=document.body.scrollWidth;e-main-toc*2-gap*4>0?document.getElementById("toc-container").classList.add("wide"):document.getElementById("toc-container").classList.remove("wide")}function getOffsetTop(e){if(!e.getClientRects().length)return 0;let t=e.getBoundingClientRect(),n=e.ownerDocument.defaultView;return t.top+n.pageYOffset}</script><div class=post-content><h2 id=1-简介>1 简介<a hidden class=anchor aria-hidden=true href=#1-简介>#</a></h2><h3 id=11-定义>1.1 定义<a hidden class=anchor aria-hidden=true href=#11-定义>#</a></h3><p>首先，MVC是模型（Model），视图（View），控制器（Controller）的简写，是一种软件设计规范</p><ul><li>模型（Dao，Service）</li><li>视图（jsp/html）</li><li>控制器（Servlet）</li></ul><p>SpringMVC是Spring Framework的一部分，是基于Java实现MVC的轻量级Web框架</p><h3 id=12-设计>1.2 设计<a hidden class=anchor aria-hidden=true href=#12-设计>#</a></h3><p>Spring的web框架围绕DIspatcherServlet设计，DispatcherServlet的作用是将请求分发到不同处理器，整个框架围绕一个中心Servlet分派请求并提供其他功能</p><p><img loading=lazy src=%e6%89%a7%e8%a1%8c%e5%8e%9f%e7%90%86.png alt></p><h2 id=2-hellospringmvc>2 HelloSpringMVC<a hidden class=anchor aria-hidden=true href=#2-hellospringmvc>#</a></h2><h3 id=21-xml配置>2.1 xml配置<a hidden class=anchor aria-hidden=true href=#21-xml配置>#</a></h3><ol><li><p>导入SpringMVC的依赖</p></li><li><p>在WEB-INF/jsp下创建hello.jsp</p></li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;body&gt;
+</span></span><span class=line><span class=cl>    ${msg}
+</span></span><span class=line><span class=cl>&lt;/body&gt;
+</span></span></code></pre></td></tr></table></div></div><ol start=3><li>配置web.xml，注册DispatcherServlet</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=nt>&lt;servlet&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;servlet-name&gt;</span>springmvc<span class=nt>&lt;/servlet-name&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class=nt>&lt;/servlet-class&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=c>&lt;!--绑定Spring的配置文件--&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;init-param&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;param-name&gt;</span>contextConfigLocation<span class=nt>&lt;/param-name&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;param-value&gt;</span>classpath:springmvc-servelt.xml<span class=nt>&lt;/param-value&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;/init-param&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=c>&lt;!--启动级别 1--&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;load-on-startup&gt;</span>1<span class=nt>&lt;/load-on-startup&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/servlet&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nt>&lt;serlvet-mapping&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;servlet-name&gt;</span>springmvc<span class=nt>&lt;/servlet-name&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=c>&lt;!--
+</span></span></span><span class=line><span class=cl><span class=c>    / 只匹配所有请求，不匹配jsp页面
+</span></span></span><span class=line><span class=cl><span class=c>    /* 匹配所有请求，包括jsp页面
+</span></span></span><span class=line><span class=cl><span class=c>    --&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;url-pattern&gt;</span>/<span class=nt>&lt;/url-pattern&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/serlvet-mapping&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=4><li>配置springmvc-servlet.xml</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=c>&lt;!--配置处理器映射器--&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;bean</span> <span class=na>class=</span><span class=s>&#34;org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl><span class=c>&lt;!--配置处理器适配器--&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;bean</span> <span class=na>class=</span><span class=s>&#34;org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl><span class=c>&lt;!--配置视图解析器--&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;bean</span> <span class=na>class=</span><span class=s>&#34;org.springframework.web.servlet.view.InternalResourceViewResolver&#34;</span><span class=nt>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;property</span> <span class=na>name=</span><span class=s>&#34;prefix&#34;</span> <span class=na>value=</span><span class=s>&#34;/WEB-INF/jsp/&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;property</span> <span class=na>name=</span><span class=s>&#34;suffix&#34;</span> <span class=na>value=</span><span class=s>&#34;.jsp&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/bean&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=5><li>创建HelloController，实现Controller接口</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>HelloController</span> <span class=kd>implements</span> <span class=n>Controller</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=nd>@Override</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>ModelAndView</span> <span class=nf>handlerRequest</span><span class=o>(</span><span class=n>HttpServletRequest</span> <span class=n>req</span><span class=o>,</span> <span class=n>HttpServletResponse</span> <span class=n>resp</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Throwable</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>ModelAndView</span> <span class=n>mv</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ModelAndView</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>String</span> <span class=n>result</span> <span class=o>=</span> <span class=s>&#34;HelloSpringMVC&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>mv</span><span class=o>.</span><span class=na>addObject</span><span class=o>(</span><span class=s>&#34;msg&#34;</span><span class=o>,</span> <span class=n>result</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>mv</span><span class=o>.</span><span class=na>setViewName</span><span class=o>(</span><span class=s>&#34;hello&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>mv</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=6><li>因为使用了BeanNameUrlHandlerMapping处理器映射器，所以要在Spring中注册bean</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=nt>&lt;bean</span> <span class=na>id=</span><span class=s>&#34;/hello&#34;</span> <span class=na>class=</span><span class=s>&#34;com.hjc.controller.HelloController&#34;</span><span class=nt>/&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=7><li>配置Tomcat，运行，在url输入localhost:8080/hello</li></ol><p>在实际开发中，一般不会写这么多配置文件，而是使用注解配置</p><h3 id=22-注解配置>2.2 注解配置<a hidden class=anchor aria-hidden=true href=#22-注解配置>#</a></h3><ol><li>导入SpringMVC的依赖</li><li>在WEB-INF/jsp下创建hello.jsp</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>&lt;body&gt;
+</span></span><span class=line><span class=cl>    ${msg}
+</span></span><span class=line><span class=cl>&lt;/body&gt;
+</span></span></code></pre></td></tr></table></div></div><ol start=3><li>配置web.xml，注册DispatcherServlet</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=nt>&lt;servlet&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;servlet-name&gt;</span>springmvc<span class=nt>&lt;/servlet-name&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class=nt>&lt;/servlet-class&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=c>&lt;!--绑定Spring的配置文件--&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;init-param&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;param-name&gt;</span>contextConfigLocation<span class=nt>&lt;/param-name&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;param-value&gt;</span>classpath:springmvc-servelt.xml<span class=nt>&lt;/param-value&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;/init-param&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=c>&lt;!--启动级别 1--&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;load-on-startup&gt;</span>1<span class=nt>&lt;/load-on-startup&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/servlet&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nt>&lt;serlvet-mapping&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;servlet-name&gt;</span>springmvc<span class=nt>&lt;/servlet-name&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=c>&lt;!--
+</span></span></span><span class=line><span class=cl><span class=c>    / 只匹配所有请求，不匹配jsp页面
+</span></span></span><span class=line><span class=cl><span class=c>    /* 匹配所有请求，包括jsp页面
+</span></span></span><span class=line><span class=cl><span class=c>    --&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;url-pattern&gt;</span>/<span class=nt>&lt;/url-pattern&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/serlvet-mapping&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=4><li>配置springmvc-servlet.xml</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=c>&lt;!--配置自动扫描包--&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;context:component-scan</span> <span class=na>base-package=</span><span class=s>&#34;com.hjc.controller&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>&lt;!--不处理静态资源--&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;mvc:default-servlet-handler/&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>&lt;!--支持mvc注解驱动--&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;mvc:annotation-driven/&gt;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c>&lt;!--配置视图解析器--&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;bean</span> <span class=na>class=</span><span class=s>&#34;org.springframework.web.servlet.view.InternalResourceViewResolver&#34;</span><span class=nt>&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;property</span> <span class=na>name=</span><span class=s>&#34;prefix&#34;</span> <span class=na>value=</span><span class=s>&#34;/WEB-INF/jsp/&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;property</span> <span class=na>name=</span><span class=s>&#34;suffix&#34;</span> <span class=na>value=</span><span class=s>&#34;.jsp&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/bean&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=5><li>创建HelloController</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Controller</span>
+</span></span><span class=line><span class=cl><span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/hello&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>HelloController</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/test&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>String</span> <span class=nf>hello</span><span class=o>(</span><span class=n>Model</span> <span class=n>model</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>model</span><span class=o>.</span><span class=na>addAttribute</span><span class=o>(</span><span class=s>&#34;msg&#34;</span><span class=o>,</span> <span class=s>&#34;HelloSpringMVC&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s>&#34;hello&#34;</span><span class=o>;</span>	<span class=c1>//返回结果会被视图解析器处理
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=6><li>配置Tomcat，运行，在url输入localhost:8080/hello/test</li></ol><p><strong>总结</strong></p><ul><li>不使用注解开发要配置处理器映射器、处理器适配器和视图解析器</li><li>使用注解开发只需要配置视图解析器</li></ul><h2 id=3-controller相关配置>3. Controller相关配置<a hidden class=anchor aria-hidden=true href=#3-controller相关配置>#</a></h2><ul><li>控制器提供访问应用程序的行为，通常通过接口定义（2.1）或注解定义（2.2）实现，一般开发中使用注解实现</li><li>控制器负责解析用户的请求并将其转化为一个模型</li><li>一个控制器可以包含多个方法</li></ul><h3 id=31-controller>3.1 @Controller<a hidden class=anchor aria-hidden=true href=#31-controller>#</a></h3><p>这个注解和@Component、@Service、@Repository作用相同，只是为了区分不同的类。@Controller将类注册到Spring容器中，并声明类的实例是一个控制器</p><ul><li>@Component：组件</li><li>@Service：service</li><li>@Controller：controller</li><li>@Repository：dao</li></ul><h3 id=32-requestmapping>3.2 @RequestMapping<a hidden class=anchor aria-hidden=true href=#32-requestmapping>#</a></h3><p>这个注解可以写在类名上或者方法名上，在类名上的注解和方法名上的注解是一种上下级的关系，内部写访问的域名</p><h3 id=33-方法返回string>3.3 方法返回String<a hidden class=anchor aria-hidden=true href=#33-方法返回string>#</a></h3><p>因为配置了视图解析器，Controller内部的方法只要返回String，返回结果会被视图解析器处理</p><p>比如</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=k>return</span> <span class=s>&#34;hello&#34;</span><span class=o>;</span>
+</span></span></code></pre></td></tr></table></div></div><p>视图解析器会根据配置的内容</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=nt>&lt;property</span> <span class=na>name=</span><span class=s>&#34;prefix&#34;</span> <span class=na>value=</span><span class=s>&#34;/WEB-INF/jsp/&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;property</span> <span class=na>name=</span><span class=s>&#34;suffix&#34;</span> <span class=na>value=</span><span class=s>&#34;.jsp&#34;</span><span class=nt>/&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>去寻找/WEB-INF/jsp/hello.jsp文件</p><h2 id=4-restful风格>4 RESTful风格<a hidden class=anchor aria-hidden=true href=#4-restful风格>#</a></h2><h3 id=41-概念>4.1 概念<a hidden class=anchor aria-hidden=true href=#41-概念>#</a></h3><p>RESTful是一个资源定位及资源操作的风格，不是标准也不是协议，只是一种风格。基于这个风格设计的软件可以更加简洁，更有层次，更易于实现缓存机制</p><h3 id=42-功能>4.2 功能<a hidden class=anchor aria-hidden=true href=#42-功能>#</a></h3><ul><li>资源操作：使用POST、DELETE、PUT、GET等不同方法对资源进行操作</li></ul><p>传统方式</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Controller</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>HelloController</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/add&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>String</span> <span class=nf>add</span><span class=o>(</span><span class=kt>int</span> <span class=n>a</span><span class=o>,</span> <span class=kt>int</span> <span class=n>b</span><span class=o>,</span> <span class=n>Model</span> <span class=n>model</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>res</span> <span class=o>=</span> <span class=n>a</span> <span class=o>+</span> <span class=n>b</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>model</span><span class=o>.</span><span class=na>addAttribute</span><span class=o>(</span><span class=s>&#34;msg&#34;</span><span class=o>,</span> <span class=s>&#34;answer is &#34;</span> <span class=o>+</span> <span class=n>res</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s>&#34;hello&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>那么，向这个控制器发送请求，我们需要在url中输入localhost:8080/add?a=1&amp;b=2，最后在页面上能显示“answer is 3”</p><p>RESTful风格</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Controller</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>HelloController</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=nd>@RequestMapping</span><span class=o>(</span><span class=n>value</span><span class=o>=</span><span class=s>&#34;/add/{a}/{b}&#34;</span><span class=o>,</span> <span class=n>method</span><span class=o>=</span><span class=s>&#34;RequestMethod.GET&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>String</span> <span class=nf>add</span><span class=o>(</span><span class=nd>@PathVariable</span> <span class=kt>int</span> <span class=n>a</span><span class=o>,</span> <span class=nd>@PathVariable</span> <span class=kt>int</span> <span class=n>b</span><span class=o>,</span> <span class=n>Model</span> <span class=n>model</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>res</span> <span class=o>=</span> <span class=n>a</span> <span class=o>+</span> <span class=n>b</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>model</span><span class=o>.</span><span class=na>addAttribute</span><span class=o>(</span><span class=s>&#34;msg&#34;</span><span class=o>,</span> <span class=s>&#34;answer is &#34;</span> <span class=o>+</span> <span class=n>res</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s>&#34;hello&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>使用@PathVariable注解，使方法参数的值对应绑定到URI模板变量上。用@RequestMapping来限制请求方法，可以直接用@GetMapping("/add/{a}/{b}")来代替。此时，需要在url输入localhost:8080/add/1/2，且请求方法为get才能访问到。如果将method改为RequestMethod.POST，或者注解改为@PostMapping("/add/{a}/{b}")，那么url不变，请求方法为post才能访问到</p><h3 id=43-优点>4.3 优点<a hidden class=anchor aria-hidden=true href=#43-优点>#</a></h3><ul><li>使路径变得更加简洁</li><li>获得参数更加方便，框架会自动进行类型转换</li></ul><h2 id=5-结果跳转方式>5 结果跳转方式<a hidden class=anchor aria-hidden=true href=#5-结果跳转方式>#</a></h2><h3 id=51-modelandview>5.1 ModelAndView<a hidden class=anchor aria-hidden=true href=#51-modelandview>#</a></h3><p>在控制器方法内部，要设置ModelAndView对象，根据view的名字和视图解析器跳到指定的页面</p><ul><li>页面 = 视图解析器前缀 + viewName + 视图解析器后缀</li></ul><h3 id=52-servletapi>5.2 ServletAPI<a hidden class=anchor aria-hidden=true href=#52-servletapi>#</a></h3><p>我们也可以通过ServletAPI，不设置ModelAndView和视图解析器来进行页面跳转</p><ul><li>通过HttpServletResponse进行输出</li><li>通过HttpServletResponse实现重定向</li><li>通过HttpServletResponse实现转发</li></ul><p>这种方法实际项目中不推荐使用</p><h3 id=53-springmvc实现转发和重定向>5.3 SpringMVC实现转发和重定向<a hidden class=anchor aria-hidden=true href=#53-springmvc实现转发和重定向>#</a></h3><ul><li>通过SpringMVC实现转发和重定向，不经过视图解析器</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Controller</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>TestController</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/tc/t1&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>String</span> <span class=nf>test1</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//实现转发
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>return</span> <span class=s>&#34;/WEB-INF/jsp/hello.jsp&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/tc/t2&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>String</span> <span class=nf>test2</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//实现转发
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>return</span> <span class=s>&#34;forward:/WEB-INF/jsp/hello.jsp&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;tc/t3&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>String</span> <span class=nf>test3</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//实现重定向
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>return</span> <span class=s>&#34;redirect:/index.jsp&#34;</span><span class=o>;</span>	<span class=c1>//重定向无法直接访问到WEB-INF目录下的文件
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>没有视图解析器，我们在写页面路径的时候要写其对应的全限定名</p><ul><li>通过SpringMVC来实现转发和重定向，经过视图解析器</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Controller</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>TestController</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/tc/t1&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>String</span> <span class=nf>test1</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//实现转发
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>return</span> <span class=s>&#34;hello&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/tc/t2&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>String</span> <span class=nf>test2</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//实现重定向
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>return</span> <span class=s>&#34;redirect:/index.jsp&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>有了视图解析器，控制器方法返回字符串默认就是转发的情况</p><h2 id=6-数据处理>6 数据处理<a hidden class=anchor aria-hidden=true href=#6-数据处理>#</a></h2><h3 id=61-数据从前端到控制器>6.1 数据从前端到控制器<a hidden class=anchor aria-hidden=true href=#61-数据从前端到控制器>#</a></h3><p>控制器要接收前端的数据进行处理，那么有这么几种情况</p><ol><li>提交的域名称和处理方法的参数名一致</li></ol><p>url：localhost:8080/hello?name=test</p><p>处理方法</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/hello&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=n>String</span> <span class=nf>hello</span><span class=o>(</span><span class=n>String</span> <span class=n>name</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>name</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=s>&#34;hello&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=2><li>提交的域名称和处理方法的参数不一致</li></ol><p>url：localhost:8080/hello?username=test</p><p>处理方法</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/hello&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=n>String</span> <span class=nf>hello</span><span class=o>(</span><span class=nd>@RequestParam</span><span class=o>(</span><span class=s>&#34;username&#34;</span><span class=o>)</span> <span class=n>String</span> <span class=n>name</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>name</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=s>&#34;hello&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>或者</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/hello&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=nd>@RequestParam</span><span class=o>(</span><span class=s>&#34;username&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=n>String</span> <span class=nf>hello</span><span class=o>(</span><span class=n>String</span> <span class=n>name</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>name</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=s>&#34;hello&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=3><li>提交的是一个对象</li></ol><p>要求提交的表单域和对象的属性名一致，方法的参数使用对象</p><p>url：localhost:8080/hello?name=test&amp;id=1&&amp;age=18</p><p>在User实体类中要保证有属性name，id，age</p><p>处理方法</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/hello&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=n>String</span> <span class=nf>hello</span><span class=o>(</span><span class=n>User</span> <span class=n>user</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>user</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=s>&#34;hello&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>如果前端传递的参数名和对象属性名不一致，结果会输出null</p><h3 id=62-数据从控制器到前端>6.2 数据从控制器到前端<a hidden class=anchor aria-hidden=true href=#62-数据从控制器到前端>#</a></h3><ol><li>通过ModelAndView<ul><li>可以在存储数据的同时，进行设置返回的逻辑视图，进行控制展示层的跳转</li></ul></li><li>通过Model<ul><li>只有几个方法用于存储数据，简化操作</li></ul></li><li>通过ModelMap<ul><li>继承自LinkedHashMap</li></ul></li></ol><p>大部分情况下，一般使用Model</p><h2 id=7-乱码问题>7 乱码问题<a hidden class=anchor aria-hidden=true href=#7-乱码问题>#</a></h2><p>从前端提交的数据到控制器会出现乱码问题，我们使用过滤器解决，直接在web.xml中配置SpringMVC提供的过滤器</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=nt>&lt;filter&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;filter-name&gt;</span>encoding<span class=nt>&lt;/filter-name&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;filter-class&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class=nt>&lt;/filter-class&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;init-param&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;param-name&gt;</span>encoding<span class=nt>&lt;/param-name&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;param-value&gt;</span>utf-8<span class=nt>&lt;/param-value&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;/init-param&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/filter&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;filter-mapping&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;filter-name&gt;</span>encoding<span class=nt>&lt;/filter-name&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;url-pattern&gt;</span>/*<span class=nt>&lt;/url-pattern&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/filter-mapping&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>当然，我们也可以用自己编写的过滤器，只要实现Filter接口</p><h2 id=8-json>8 JSON<a hidden class=anchor aria-hidden=true href=#8-json>#</a></h2><p>前后端分离，后端部署后端，后端提供接口，前端独立部署，渲染后端数据，前后端通过json格式来交换数据</p><h3 id=81-概念>8.1 概念<a hidden class=anchor aria-hidden=true href=#81-概念>#</a></h3><p>JSON（JavaScript Object Notation，JS对象标记）是一种轻量级数据交换格式，采用完全独立于编程语言的<strong>文本格式</strong>来存储和表示数据</p><h3 id=82-语法>8.2 语法<a hidden class=anchor aria-hidden=true href=#82-语法>#</a></h3><ul><li>对象表示为键值对，数据由逗号分隔</li><li>花括号表示对象</li><li>方括号保存数组</li></ul><p>JSON是JavaScript对象的字符串表示法，使用文本表示一个JS对象的信息，本质是一个字符串</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kd>var</span> <span class=nx>obj</span> <span class=o>=</span> <span class=p>{</span><span class=nx>a</span><span class=o>:</span> <span class=s1>&#39;Hello&#39;</span><span class=p>,</span> <span class=nx>b</span><span class=o>:</span> <span class=s1>&#39;world&#39;</span><span class=p>};</span>	<span class=c1>//这是一个对象，键名也可以使用引号
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>json</span> <span class=o>=</span> <span class=s1>&#39;{&#34;a&#34;: &#34;Hello&#34;, &#34;b&#34;: &#34;world&#34;}&#39;</span><span class=p>;</span>	<span class=c1>//这是一个JSON字符串
+</span></span></span></code></pre></td></tr></table></div></div><p>JSON和JavaScript对象互转</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-javascript data-lang=javascript><span class=line><span class=cl><span class=kd>var</span> <span class=nx>obj</span> <span class=o>=</span> <span class=nx>JSON</span><span class=p>.</span><span class=nx>parse</span><span class=p>(</span><span class=s1>&#39;{&#34;a&#34;: &#34;Hello&#34;, &#34;b&#34;: &#34;world&#34;}&#39;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=c1>//结果为 {a: &#39;Hello&#39;, b: &#39;world&#39; }
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>var</span> <span class=nx>json</span> <span class=o>=</span> <span class=nx>JSON</span><span class=p>.</span><span class=nx>stringify</span><span class=p>({</span><span class=nx>a</span><span class=o>:</span> <span class=s1>&#39;Hello&#39;</span><span class=p>,</span> <span class=nx>b</span><span class=o>:</span> <span class=s1>&#39;world&#39;</span><span class=p>});</span>
+</span></span><span class=line><span class=cl><span class=c1>//结果为 &#39;{&#34;a&#34;: &#34;Hello&#34;, &#34;b&#34;: &#34;world&#34;}&#39;
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=83-controller返回json数据>8.3 Controller返回JSON数据<a hidden class=anchor aria-hidden=true href=#83-controller返回json数据>#</a></h3><p>使用JSON解析工具Jackson或者fastjson</p><ol><li>导入Jackson的包</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=nt>&lt;dependency&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;groupId&gt;</span>com.fasterxml.jackson.core<span class=nt>&lt;/groupId&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;artifactId&gt;</span>jackson-databind<span class=nt>&lt;/artifactId&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;version&gt;</span>2.11.0<span class=nt>&lt;/version&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/dependency&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=2><li>配置web.xml（DispatcherSerlvet、CharacterEncodingFilter）</li><li>配置springmvc-servlet.xml（自动扫描包，视图解析器）</li><li>编写User实体类</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>User</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>private</span> <span class=n>String</span> <span class=n>name</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=kd>private</span> <span class=kt>int</span> <span class=n>age</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=kd>private</span> <span class=n>String</span> <span class=n>sex</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=c1>//省略get/set方法和构造函数
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><ol start=5><li>编写UserController</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Controller</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>UserController</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;j1&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=nd>@ResponseBody</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>String</span> <span class=nf>json1</span><span class=o>()</span> <span class=kd>throws</span> <span class=n>JsonProcessingException</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>ObjectMapper</span> <span class=n>mapper</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ObjectMapper</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>User</span> <span class=n>user</span> <span class=o>=</span> <span class=k>new</span> <span class=n>User</span><span class=o>(</span><span class=s>&#34;test&#34;</span><span class=o>,</span> <span class=n>18</span><span class=o>,</span> <span class=s>&#34;male&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>String</span> <span class=n>str</span> <span class=o>=</span> <span class=n>mapper</span><span class=o>.</span><span class=na>writeValueAsString</span><span class=o>(</span><span class=n>user</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>str</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>使用@ResponseBody，方法返回值不会走视图解析器，会直接返回字符串。在url输入localhost:8080/j1，页面上显示json字符串 {&ldquo;name&rdquo;: &ldquo;test&rdquo;, &ldquo;age&rdquo;: &ldquo;18&rdquo;, &ldquo;sex&rdquo;: &ldquo;male&rdquo;}。除了使用@ResponseBody，还可以在类上使用@RestController，而不使用@Controller，那么类中的所有方法都会返回字符串</p><p>如果出现乱码问题，我们可以在springmvc-serclet.xml文件中配置</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=nt>&lt;mvc:annotation-driven&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;mvc:message-converters</span> <span class=na>register-defaults=</span><span class=s>&#34;trued&#34;</span><span class=nt>&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;bean</span> <span class=na>class=</span><span class=s>&#34;org.springframework.http.converter.StringHttpMessageConverter&#34;</span><span class=nt>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&lt;constructor-arg</span> <span class=na>value=</span><span class=s>&#34;UTF-8&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;/bean&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;bean</span> <span class=na>class=</span><span class=s>&#34;org.springframework.http.converter.json.MappingJackson2HttpMessageConverter&#34;</span><span class=nt>&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&lt;property</span> <span class=na>name=</span><span class=s>&#34;objectMapper&#34;</span><span class=nt>&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=nt>&lt;bean</span> <span class=na>class=</span><span class=s>&#34;org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean&#34;</span><span class=nt>&gt;</span>
+</span></span><span class=line><span class=cl>                    <span class=nt>&lt;property</span> <span class=na>name=</span><span class=s>&#34;failOnEmptyBeans&#34;</span> <span class=na>value=</span><span class=s>&#34;false&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl>                <span class=nt>&lt;/bean&gt;</span>
+</span></span><span class=line><span class=cl>            <span class=nt>&lt;/property&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;/bean&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;/mvc:message-converters&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/mvc:annotation-driven&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>如果使用fastjson，使用方法和Jackson类似</p><h2 id=9-拦截器>9 拦截器<a hidden class=anchor aria-hidden=true href=#9-拦截器>#</a></h2><p>拦截器类似于过滤器Filter，用于对处理器进行预处理和后处理</p><p>过滤器和拦截器的区别：拦截器是AOP思想的具体应用</p><ul><li>过滤器<ul><li>servlet规范中的一部分，任何JavaWeb都可以使用</li><li>在url-pattern中配置了/*之后，可以对所有要访问的资源进行拦截</li></ul></li><li>拦截器<ul><li>拦截器是SpringMVC框架的，只有使用了SpringMVC框架的项目才能使用</li><li>拦截器只会拦截访问的控制器方法，如果访问的是jsp/html/css/image/js是不会进行拦截的</li></ul></li></ul><h3 id=91-自定义拦截器>9.1 自定义拦截器<a hidden class=anchor aria-hidden=true href=#91-自定义拦截器>#</a></h3><p>想要自定义拦截器，只要编写的类实现HandlerInterceptor接口</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>MyInterceptor</span> <span class=kd>implements</span> <span class=n>HandlerInterceptor</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=c1>//return true: 放行，执行下一个拦截器
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>//return false: 不放行
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>preHandle</span><span class=o>(</span><span class=n>HttpServletRequest</span> <span class=n>req</span><span class=o>,</span> <span class=n>HttpServletResponse</span> <span class=n>resp</span><span class=o>,</span> <span class=n>Object</span> <span class=n>handler</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;处理前&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=kc>true</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>postHandle</span><span class=o>(</span><span class=n>HttpServletRequest</span> <span class=n>req</span><span class=o>,</span> <span class=n>HttpServletResponse</span> <span class=n>resp</span><span class=o>,</span> <span class=n>Object</span> <span class=n>handler</span><span class=o>,</span> <span class=n>ModelAndView</span> <span class=n>modelAndView</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;处理后&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>afterCompletion</span><span class=o>(</span><span class=n>HttpServletRequest</span> <span class=n>req</span><span class=o>,</span> <span class=n>HttpServletResponse</span> <span class=n>resp</span><span class=o>,</span> <span class=n>Object</span> <span class=n>handler</span><span class=o>,</span> <span class=n>Exception</span> <span class=n>ex</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;请理&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>配置拦截器</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=nt>&lt;mvc:interceptors&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;mvc:interceptor&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=c>&lt;!--/**代表这个请求下的所有请求--&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;mvc:mapping</span> <span class=na>path=</span><span class=s>&#34;/**&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;bean</span> <span class=na>class=</span><span class=s>&#34;com.hjc.config.MyInterceptor&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;/mvc:interceptor&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/mvc:interceptors&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>只要访问任一控制器，拦截器的三个方法都会执行，首先执行preHandle，再执行控制器方法，最后执行postHandle和afterCompletion方法。如果preHandle方法返回false，那么访问控制器时，只会执行preHandle方法，不会执行后续方法</p><h3 id=92-拦截器实现登陆判断验证>9.2 拦截器实现登陆判断验证<a hidden class=anchor aria-hidden=true href=#92-拦截器实现登陆判断验证>#</a></h3><p>编写LoginController</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Controller</span>
+</span></span><span class=line><span class=cl><span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/user&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>LoginController</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>    <span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/main&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>String</span> <span class=nf>main</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s>&#34;main&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nd>@RequestMapping</span><span class=o>(</span><span class=s>&#34;/goLogin&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>String</span> <span class=nf>goLogin</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s>&#34;login&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=nd>@RequestMappint</span><span class=o>(</span><span class=s>&#34;/login&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=n>String</span> <span class=nf>login</span><span class=o>(</span><span class=n>HttpSession</span> <span class=n>session</span><span class=o>,</span> <span class=n>String</span> <span class=n>username</span><span class=o>,</span> <span class=n>String</span> <span class=n>password</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//省略判断username, password的代码
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>session</span><span class=o>.</span><span class=na>setAttribute</span><span class=o>(</span><span class=s>&#34;userLoginInfo&#34;</span><span class=o>,</span> <span class=n>username</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=s>&#34;main&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>在首页index.jsp中放置两个超链接，分别跳向“/goLogin”和“/main”，方法分别返回登陆页面login.jsp和main.jsp（放置于WEB-INF/jsp/目录下）</p><p>编写一个拦截器，使得未登录时无法访问main.jsp</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>LoginInterceptor</span> <span class=kd>implements</span> <span class=n>HandlerInterceptor</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kt>boolean</span> <span class=nf>preHandler</span><span class=o>(</span><span class=n>HttpServletRequest</span> <span class=n>req</span><span class=o>,</span> <span class=n>HttpServletResponse</span> <span class=n>resp</span><span class=o>,</span> <span class=n>Object</span> <span class=n>handler</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>HttpSession</span> <span class=n>session</span> <span class=o>=</span> <span class=n>req</span><span class=o>.</span><span class=na>getSession</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=o>(</span><span class=n>req</span><span class=o>.</span><span class=na>getRequestURI</span><span class=o>().</span><span class=na>contains</span><span class=o>(</span><span class=s>&#34;goLogin&#34;</span><span class=o>))</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>true</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=o>(</span><span class=n>req</span><span class=o>.</span><span class=na>getRequestURI</span><span class=o>().</span><span class=na>contains</span><span class=o>(</span><span class=s>&#34;login&#34;</span><span class=o>))</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>true</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=o>(</span><span class=n>session</span><span class=o>.</span><span class=na>getAttribute</span><span class=o>(</span><span class=s>&#34;userLoginInfo&#34;</span><span class=o>)</span> <span class=o>!=</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=kc>true</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>req</span><span class=o>.</span><span class=na>getRequestDispatcher</span><span class=o>(</span><span class=s>&#34;/WEB-INF/jsp/login.jsp&#34;</span><span class=o>).</span><span class=na>forward</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>配置拦截器</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-xml data-lang=xml><span class=line><span class=cl><span class=nt>&lt;mvc:interceptors&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;mvc:interceptor&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=c>&lt;!--/**代表这个请求下的所有请求--&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;mvc:mapping</span> <span class=na>path=</span><span class=s>&#34;/user/**&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl>        <span class=nt>&lt;bean</span> <span class=na>class=</span><span class=s>&#34;com.hjc.config.LoginInterceptor&#34;</span><span class=nt>/&gt;</span>
+</span></span><span class=line><span class=cl>    <span class=nt>&lt;/mvc:interceptor&gt;</span>
+</span></span><span class=line><span class=cl><span class=nt>&lt;/mvc:interceptors&gt;</span>
+</span></span></code></pre></td></tr></table></div></div></div><footer class=post-footer><ul class=post-tags><li><a href=https://h-jch.github.io/tags/java/>java</a></li><li><a href=https://h-jch.github.io/tags/springmvc/>springmvc</a></li></ul><nav class=paginav><a class=prev href=https://h-jch.github.io/posts/code/ssm-integration/><span class=title>« Prev</span><br><span>SSM整合配置笔记</span></a>
+<a class=next href=https://h-jch.github.io/posts/code/study-spring/><span class=title>Next »</span><br><span>Spring学习笔记</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2023 <a href=https://h-jch.github.io>Kei's Blog</a></span>
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg></a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

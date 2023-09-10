@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>cpp on Kei&#39;s Blog</title>
+    <link>https://h-jch.github.io/tags/cpp/</link>
+    <description>Recent content in cpp on Kei&#39;s Blog</description>
+    <image>
+      <title>Kei&#39;s Blog</title>
+      <url>https://h-jch.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://h-jch.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 27 Apr 2019 22:45:00 +0800</lastBuildDate><atom:link href="https://h-jch.github.io/tags/cpp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43; const关键字</title>
+      <link>https://h-jch.github.io/posts/code/cpp-const/</link>
+      <pubDate>Sat, 27 Apr 2019 22:45:00 +0800</pubDate>
+      
+      <guid>https://h-jch.github.io/posts/code/cpp-const/</guid>
+      <description>关于const关键字，有几个注意点。 const的引用 首先是把引用绑定到const对象上，与普通引用不同，对常量的引用不能被用来修改它所绑定的</description>
+    </item>
+    
+    <item>
+      <title>c&#43;&#43; primer学习</title>
+      <link>https://h-jch.github.io/posts/code/cppprimer-ans/</link>
+      <pubDate>Fri, 19 Apr 2019 15:47:00 +0800</pubDate>
+      
+      <guid>https://h-jch.github.io/posts/code/cppprimer-ans/</guid>
+      <description>看《c++ primer》这本书已经很久了，也不敢说自己掌握了多少。之前过了一遍，这本书几乎覆盖了c++的全部知识点，很丰富，但也很杂。 最近在</description>
+    </item>
+    
+  </channel>
+</rss>

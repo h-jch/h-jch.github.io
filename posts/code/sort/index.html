@@ -1,0 +1,696 @@
+<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>排序算法 | Kei's Blog</title><meta name=keywords content="数据结构"><meta name=description content="基本概念 1 void X_Sort(ElementType A[], int N) N是正整数 只讨论基于比较的排序(<、=、>有定义) 只讨论内部排序 稳定性：任意两个相等的数据，排序前后的相对位"><meta name=author content="kei"><link rel=canonical href=https://h-jch.github.io/posts/code/sort/><link crossorigin=anonymous href=/assets/css/stylesheet.678b5c47efa744d2e0dd0d61101075e6aecdc9a0631e7ad8538f4ec0cca79273.css integrity="sha256-Z4tcR++nRNLg3Q1hEBB15q7NyaBjHnrYU49OwMynknM=" rel="preload stylesheet" as=style><script defer crossorigin=anonymous src=/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG+9vmJ0cTS+ovo0FeA=" onload=hljs.initHighlightingOnLoad()></script>
+<link rel=icon href=https://h-jch.github.io/images/avatar.png><link rel=icon type=image/png sizes=16x16 href=https://h-jch.github.io/images/avatar.png><link rel=icon type=image/png sizes=32x32 href=https://h-jch.github.io/images/avatar.png><link rel=apple-touch-icon href=https://h-jch.github.io/images/avatar.png><link rel=mask-icon href=https://h-jch.github.io/images/avatar.png><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><meta property="og:title" content="排序算法"><meta property="og:description" content="基本概念 1 void X_Sort(ElementType A[], int N) N是正整数 只讨论基于比较的排序(<、=、>有定义) 只讨论内部排序 稳定性：任意两个相等的数据，排序前后的相对位"><meta property="og:type" content="article"><meta property="og:url" content="https://h-jch.github.io/posts/code/sort/"><meta property="og:image" content="https://h-jch.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E"><meta property="article:section" content="posts"><meta property="article:published_time" content="2019-07-21T22:58:00+08:00"><meta property="article:modified_time" content="2019-07-21T22:58:00+08:00"><meta property="og:site_name" content="Kei's Blog"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://h-jch.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E"><meta name=twitter:title content="排序算法"><meta name=twitter:description content="基本概念 1 void X_Sort(ElementType A[], int N) N是正整数 只讨论基于比较的排序(<、=、>有定义) 只讨论内部排序 稳定性：任意两个相等的数据，排序前后的相对位"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"name":"Posts","item":"https://h-jch.github.io/posts/"},{"@type":"ListItem","position":3,"name":"排序算法","item":"https://h-jch.github.io/posts/code/sort/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"排序算法","name":"排序算法","description":"基本概念 1 void X_Sort(ElementType A[], int N) N是正整数 只讨论基于比较的排序(\u0026lt;、=、\u0026gt;有定义) 只讨论内部排序 稳定性：任意两个相等的数据，排序前后的相对位","keywords":["数据结构"],"articleBody":"基本概念 1 void X_Sort(ElementType A[], int N) N是正整数 只讨论基于比较的排序(\u003c、=、\u003e有定义) 只讨论内部排序 稳定性：任意两个相等的数据，排序前后的相对位置不发生变化 没有一种排序是任何情况下都表现最好的 简单排序 冒泡排序 每一趟冒泡可以确定至少一个元素的位置，确定一个最大值，也就是说，排序过程中序列尾部是排好序的。冒泡排序是稳定的算法。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 void Bubble_Sort(ElementType A[], int N){ int P,i; for(P=N-1;P\u003e=0;P--){ int flag=0; for(i=0;i\u003cP;i++){ //一趟冒泡 if(A[i]\u003eA[i+1]){ Swap(A[i],A[i+1]); flag=1; //标识发生了交换 } } if(flag==0) //全程无交换 break; } } 最好情况：顺序 T=O(N)，最坏情况：逆序 T=O(N^2)\n插入排序 从1号元素开始，依次取出元素与其前面的元素比较，将其插入到合适的位置，排序过程中序列前部是排好序的。插入排序是稳定的算法。\n1 2 3 4 5 6 7 8 9 10 11 void Insertion_Sort(ElementType A[], int N){ int P,i; ElementType Tmp; for(P=1;P\u003cN;P++){ Tmp=A[P]; //取出未排序序列中的第一个元素 for(i=P;i\u003e0\u0026\u0026A[i-1]\u003eTmp;i--) A[i]=A[i-1]; //依次与已排序序列中的元素比较并右移 A[i]=Tmp; //放入适合的位置 } } 最好情况：顺序 T=O(N)，最坏情况：逆序 T=O(N^2)\n简单排序的平均时间复杂度为O(N^2)。\n希尔排序 希尔排序是由Donald Shell提出的，所以叫希尔排序。 要进行希尔排序，首先要定义增量序列Dm \u003e Dm-1 \u003e ··· \u003e D1 = 1，然后就在待排序列上对每个增量序列Dk进行“Dk-间隔”排序(k=m,m-1,···,1)。其中要注意的是，“Dk-间隔”有序的序列，在执行“Dk-1-间隔”排序后，仍然是“Dk-间隔”有序的。 那么，希尔排序的关键就是确定增量序列，之后的每个“Dk-间隔”排序就可以采用简单排序来做。\n原始希尔排序 Dm=[N/2], Dk=[Dk+1/2] 向下取整 1 2 3 4 5 6 7 8 9 10 void Shell_Sort(ElementType A[], int N){ for(D=N/2;D\u003e0;D/=2){ //希尔增量序列 for(P=D;P\u003cN;P++){ //插入排序 Tmp=A[P]; for(i=P;i\u003e=D\u0026\u0026A[i-D]\u003eTmp;i-=D) A[i]=A[i-D]; A[i]=Tmp; } } } 最坏情况：T=O(N^2)\n但是这样选取增量序列有个问题，增量元素不互质，那么小增量可能根本不起作用。\n这样也就产生了跟多增量序列\nHibbard增量序列\nDk=2^k-1 —— 相邻元素互质 最坏情况：T=O(N^3/2) 猜想：Tavg=O(N^5/4) Sedgewick增量序列\n{1,5,19,41,109,···} —— 9×4^i-9×2^i+1或4^i-3×2^i+1 猜想：Tavg=O(N^7/6), Tworst=O(N^4/3) 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 void Shell_Sort(ElementType A[], int N){ //希尔排序 - 用Sedgewick增量序列 int Si,D,P,i; ElementTypde Tmp; //只列出一小部分增量 int Sedgewick[]={929,505,209,109,41,19,5,1,0}; for(Si=0;Sedgewick[Si]\u003e=N;Si++) ; //初始的增量Sedgewick[Si]不能超过待排序列的长度，把超过的部分滤除 for(D=Sedgewick[Si];D\u003e0;D=Sedgewick[++Si]){ for(P=D;P\u003cN;P++){ //插入排序 Tmp=A[P]; for(i=P;i\u003e=D\u0026\u0026A[i-D]\u003eTmp;i-=D) A[i]=A[i-D]; A[i]=Tmp; } } } 堆排序 堆排序是利用最小堆的特性来对待排序列进行排序。\n算法1 用待排序列中的元素建最小堆，再从堆中返回最小元素到新的数组中，最后把新的排好序的数组复制到原序列中。 1 2 3 4 5 6 7 void Heap_Sort(ElementType A[], int N){ BuildHeap(A); //O(N) for(i=0;i\u003cN;i++) TmpA[i]=DeleteMin(A); //O(logN) for(i=0;i\u003cN;i++) //O(N) A[i]=TmpA[i]; } T=O(NlogN)，需要额外O(N)的空间，并且复制元素需要时间。\n算法2 用待排序列中的元素建最大堆，再对堆直接操作，把根结点最大值和堆的最后一个元素交换，则确定了最大值的位置，然后对其余元素进行调整(下滤)，依次进行上述操作。相比算法1不需要额外的空间。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 void Swap(ElementType *a, ElementType *b){ ElementType t=*a; *a=*b; *b=t; } void PercDown(ElementType A[], int p, int N){ //改编自堆的下滤操作PrecDown(MaxHeap H, int p)，参考堆的那篇博客 //将N个元素的数组中以A[p]为根的子堆调整为最大堆 int Parent,Child; ElementType X; X=A[p]; //取出根结点的值 for(Parent=p;Parent*2+1\u003cN;Parent=Child){ Child=Parent*2+1; if((Child!=N-1)\u0026\u0026(A[Child]\u003cA[Child+1])) Child++; //Child指向左右子结点的最大者 if(X\u003e=A[Child])\tbreak; //找到了合适位置 else A[Parent]=A[Child]; //下滤 } A[Parent]=X; } void Heap_Sort(ElementType A[], int N){ int i; for(i=N/2-1;i\u003e=0;i--) PercDown(A,i,N); //建最大堆，从最后一个父结点开始往前，依次下滤 for(i=N-1;i\u003e0;i--){ Swap(\u0026A[0],\u0026A[i]); //交换最大值和末尾的值，相当于删除最大堆顶 PercDown(A,0,i); //对剩余子堆进行调整(下滤) } } 堆排序处理N个不同元素的随机排列的平均比较次数是2NlogN-O(NloglogN)。虽然堆排序给出最佳平均复杂度，但实际效果不如用Sedgewick增量序列的希尔排序。\n归并排序 归并排序先将待排序列分成多个序列，每个序列各自排序，最后多个有序序列合并成一个有序序列。归并算法的核心便是有序子列的归并。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 void Merge(ElementType A[], ElementType TmpA[], int L, int R, int RightEnd){ //L=左边起始位置，R=右边起始位置，RightEnd=右边终点位置 //将有序的A[L]-A[R-1]和A[R]-A[RightEnd]归并成一个有序序列 int LeftEnd,NumElements,Tmp; int i; LeftEnd=R-1; //左边重点位置 Tmp=L; //有序序列的起始位置 NumElements=RightEnd-L+1; while(L\u003c=LeftEnd\u0026\u0026R\u003c=RightEnd){ if(A[L]\u003c=A[R]) TmpA[Tmp++]=A[L++]; //将左边元素复制到TmpA else TmpA[Tmp++]=A[R++]; //将右边元素复制到TmpA } while(L\u003c=LeftEnd) TmpA[Tmp++]=A[L++]; //直接复制左边剩下的 while(R\u003c=RightEnd) TmpA[Tmp++]=A[R++]; //直接复制右边剩下的 for(i=0;i\u003cNumElements;i++,RightEnd--) A[RightEnd]=TmpA[Rightend]; //将有序的TmpA复制回A } 归并排序有两种实现方式，递归算法和非递归算法。\n递归算法 归并排序的递归算法采用的是分而治之的思想。\n1 2 3 4 5 6 7 8 9 10 11 void MSort(ElementType A[], ElementType TmpA[], int L, int RightEnd){ //核心递归排序函数 int Center; if(L\u003cRightEnd){ Center=(L+RightEnd)/2; MSort(A, TmpA, L, Center); //递归解决左边 MSort(A, TmpA, Center+1, RightEnd); //递归解决右边 Merge(A, TmpA, L, Center+1, RightEnd); //合并两段有序序列 } } T=O(NlogN)，是稳定的算法。\n统一函数接口\n1 2 3 4 5 6 7 8 9 10 11 void Merge_Sort(ElementType A[], int N){ ElementType *TmpA; TmpA=(ElementType *)malloc(N*sizeof(ElementType)); if(TmpA!=NULL){ MSort(A, TmpA, 0, N-1); free(TmpA); } else printf(\"空间不足\"); } 非递归算法 归并排序的非递归算法由循环实现。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 void Merge_pass(ElementType A[], ElementType TmpA[], int N, int length){ //length是当前有序子序列的长度 //两两归并相邻有序子序列 int i,j; for(i=0;i\u003c=N-2*length;i+=2*length) Merge(A, TmpA, i, i+length, i+2*length-1); if(i+length\u003cN) //归并最后2个子列 Merge(A, TmpA, i, i+length, N-1); else //最后只剩1个子列 for(j=i;j\u003cN;j++) TmpA[j]=A[j]; } void Merge_Sort(ElementType A[], int N){ int length; ElementType *TmpA; length=1; //初始化子序列长度 TmpA=(ElementType *)malloc(N*sizeof(ElementType)); if(TmpA!=NULL){ while(length\u003cN){ Merge_pass(A, TmpA, N, length); length*=2; Merge_pass(TmpA, A, N, length); length*=2; } free(TmpA); } else printf(\"空间不足\"); } 快速排序 快速排序采用分而治之的思想，先选取一个主元pivot，比主元小的元素放在前面，而比主元大的元素放在后面。问题就是如何选取主元，这里有个方法是取头、中、尾的中位数，比如8、12、3的中位数是8。另外，如果数据规模较小，快速排序的效率可能还不如插入排序快，所以，当递归的数据规模充分小，则停止递归，直接调用简单排序。\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 ElementType Median3(ElementType A[], int Left, int Right){ int Center=(Left+Right)/2; if(A[Left]\u003eA[Center]) Swap(\u0026A[Left],\u0026A[Center]); if(A[Left]\u003eA[Right]) Swap(\u0026A[Left],\u0026A[Right]); if(A[Center]\u003eA[Right]) Swap(\u0026A[Center],\u0026A[Right]); //此时，A[Left]\u003c=A[Center]\u003c=A[Right] Swap(\u0026A[Center],\u0026A[Right-1]); //将基准Pivot藏到右边 //只需要考虑A[Left+1],···,A[Right-2] return A[Right-1]; } void Qsort(ElementType A[], int Left, int Right){ int Pivot,Cutoff,Low,High; if(Cutoff\u003c=Right-Left){ //如果序列元素充分多，则进入快速排序 Pivot=Median3(A,Left,Right); //选取主元pivot Low=Left; High=Right-1; while(1){ //将序列中比基准小的移到基准左边，大的移到基准右边 while(A[++Low]\u003cPivot); while(A[--High]\u003ePivot); if(Low\u003cHigh) Swap(\u0026A[Low],\u0026A[High]); else break; } Swap(\u0026A[Low],\u0026A[Right-1]); //将基准放到正确的位置 Qsort(A,Left,Low-1); //递归解决左边 Qsort(A,Low+1,Right); //递归解决右边 } else Insertion_Sort(A+Left,Right-Left+1); //元素太少，用插入排序 } void Quick_Sort(ElementType A[], int N){ //统一接口 Qsort(A,0,N-1); } 如果pivot选取的好，那么快速排序的时间复杂度为T=O(NlogN)。\n基数排序 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 /* 假设元素最多有MaxDigit个关键字，基数全是同样的Radix */ #define MaxDigit 4 #define Radix 10 typedef struct Node *PtrToNode; struct Node{ //桶元素结点 int key; PtrToNode next; }; struct HeadNode{ //桶头结点 PtrToNode head, tail; }; typedef struct HeadNode Bucket[Radix]; int GetDigit(int X, int D){ /* 默认次位D=1, 主位D\u003c=MaxDigit */ int d, i; for(i=1; i\u003c=D; i++){ d = X % Radix; X /= Radix; } return d; } void LSDRadixSort(ElementType A[], int N){ //基数排序-次位优先 int D, Di, i; Bucket B; PtrToNode tmp, p, List = NULL; for(i=0; i\u003cRadix; i++) /* 初始化每个桶为空链表 */ B[i].head = B[i].tail = NULL; for(i=0; i\u003cN; i++){ /* 将原始序列逆序存入初始链表List */ tmp = (PtrToNode)malloc(sizeof(struct Node)); tmp-\u003ekey = A[i]; tmp-\u003enext = List; List = tmp; } /* 下面开始排序 */ for(D=1; D\u003c=MaxDigit; D++){ /* 对数据的每一位循环处理 */ /* 下面是分配的过程 */ p = List; while(p){ Di = GetDigit(p-\u003ekey, D); /* 获得当前元素的当前位数字 */ /* 从List中摘除 */ tmp = p; p = p-\u003enext; /* 插入B[Di]号桶尾 */ tmp-\u003enext = NULL; if(B[Di].head == NULL) B[Di].head = B[Di].tail = tmp; else{ B[Di].tail-\u003enext = tmp; B[Di].tail = tmp; } } /* 下面是收集的过程 */ List = NULL; for(Di=Radix-1; Di\u003e=0; Di--){ /* 将每个桶的元素顺序收集入List */ if(B[Di].head){ /* 如果桶不为空 */ /* 整桶插入List表头 */ B[Di].tail-\u003enext = List; List = B[Di].head; B[Di].head = B[Di].tail = NULL; /* 清空桶 */ } } } /* 将List倒入A[]并释放空间 */ for(i=0; i\u003cN; i++){ tmp = List; List = List-\u003enext; A[i] = tmp-\u003ekey; free(tmp); } } //基数排序-主位优先 void MSD(ElementType A[], int L, int R, int D){ /* 核心递归函数: 对A[L]...A[R]的第D位数进行排序 */ int Di, i, j; Bucket B; PtrToNode tmp, p, List = NULL; if (D==0) return; /* 递归终止条件 */ for(i=0; i\u003cRadix; i++) /* 初始化每个桶为空链表 */ B[i].head = B[i].tail = NULL; for(i=L; i\u003c=R; i++){ /* 将原始序列逆序存入初始链表List */ tmp = (PtrToNode)malloc(sizeof(struct Node)); tmp-\u003ekey = A[i]; tmp-\u003enext = List; List = tmp; } /* 下面是分配的过程 */ p = List; while (p){ Di = GetDigit(p-\u003ekey, D); /* 获得当前元素的当前位数字 */ /* 从List中摘除 */ tmp = p; p = p-\u003enext; /* 插入B[Di]号桶 */ if(B[Di].head == NULL) B[Di].tail = tmp; tmp-\u003enext = B[Di].head; B[Di].head = tmp; } /* 下面是收集的过程 */ i = j = L; /* i, j记录当前要处理的A[]的左右端下标 */ for(Di=0; Di\u003cRadix; Di++){ /* 对于每个桶 */ if(B[Di].head){ /* 将非空的桶整桶倒入A[], 递归排序 */ p = B[Di].head; while(p){ tmp = p; p = p-\u003enext; A[j++] = tmp-\u003ekey; free(tmp); } /* 递归对该桶数据排序, 位数减1 */ MSD(A, i, j-1, D-1); i = j; /* 为下一个桶对应的A[]左端 */ } } } void MSDRadixSort(ElementType A[], int N){ //统一接口 MSD(A, 0, N-1, MaxDigit); } 排序算法的比较 排序算法 平均时间复杂度 最坏情况下时间复杂度 额外空间复杂度 稳定性 简单选择排序 O(N^2) O(N^2) O(1) 不稳定 冒泡排序 O(N^2) O(N^2) O(1) 稳定 直接插入排序 O(N^2) O(N^2) O(1) 稳定 希尔排序 O(N^d) O(N^2) O(1) 不稳定 堆排序 O(NlogN) O(NlogN) O(1) 不稳定 快速排序 O(NlogN) O(N^2) O(logN) 不稳定 归并排序 O(NlogN) O(NlogN) O(N) 稳定 基数排序 O(P(N+B)) O(P(N+B)) O(N+B) 稳定 ","wordCount":"3699","inLanguage":"en","datePublished":"2019-07-21T22:58:00+08:00","dateModified":"2019-07-21T22:58:00+08:00","author":[{"@type":"Person","name":"kei"}],"mainEntityOfPage":{"@type":"WebPage","@id":"https://h-jch.github.io/posts/code/sort/"},"publisher":{"@type":"Organization","name":"Kei's Blog","logo":{"@type":"ImageObject","url":"https://h-jch.github.io/images/avatar.png"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://h-jch.github.io accesskey=h title="Kei's Blog (Alt + H)"><img src=https://h-jch.github.io/images/avatar.png alt aria-label=logo height=35>Kei's Blog</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://h-jch.github.io/categories/ title=Categories><span>Categories</span></a></li><li><a href=https://h-jch.github.io/tags/ title=Tags><span>Tags</span></a></li><li><a href=https://h-jch.github.io/archives/ title=Archives><span>Archives</span></a></li><li><a href=https://h-jch.github.io/about/ title=About><span>About</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class=post-title>排序算法</h1><div class=post-meta><span title='2019-07-21 22:58:00 +0800 CST'>2019-07-21</span>&nbsp;·&nbsp;8 min&nbsp;·&nbsp;3699 words&nbsp;·&nbsp;kei</div></header><aside id=toc-container class="toc-container wide"><div class=toc><details open><summary accesskey=c title="(Alt + C)"><span class=details>Table of Contents</span></summary><div class=inner><ul><li><a href=#%e5%9f%ba%e6%9c%ac%e6%a6%82%e5%bf%b5 aria-label=基本概念>基本概念</a></li><li><a href=#%e7%ae%80%e5%8d%95%e6%8e%92%e5%ba%8f aria-label=简单排序>简单排序</a><ul><ul><li><a href=#%e5%86%92%e6%b3%a1%e6%8e%92%e5%ba%8f aria-label=冒泡排序>冒泡排序</a></li><li><a href=#%e6%8f%92%e5%85%a5%e6%8e%92%e5%ba%8f aria-label=插入排序>插入排序</a></li></ul></ul></li><li><a href=#%e5%b8%8c%e5%b0%94%e6%8e%92%e5%ba%8f aria-label=希尔排序>希尔排序</a></li><li><a href=#%e5%a0%86%e6%8e%92%e5%ba%8f aria-label=堆排序>堆排序</a></li><li><a href=#%e5%bd%92%e5%b9%b6%e6%8e%92%e5%ba%8f aria-label=归并排序>归并排序</a><ul><ul><li><a href=#%e9%80%92%e5%bd%92%e7%ae%97%e6%b3%95 aria-label=递归算法>递归算法</a></li><li><a href=#%e9%9d%9e%e9%80%92%e5%bd%92%e7%ae%97%e6%b3%95 aria-label=非递归算法>非递归算法</a></li></ul></ul></li><li><a href=#%e5%bf%ab%e9%80%9f%e6%8e%92%e5%ba%8f aria-label=快速排序>快速排序</a></li><li><a href=#%e5%9f%ba%e6%95%b0%e6%8e%92%e5%ba%8f aria-label=基数排序>基数排序</a></li><li><a href=#%e6%8e%92%e5%ba%8f%e7%ae%97%e6%b3%95%e7%9a%84%e6%af%94%e8%be%83 aria-label=排序算法的比较>排序算法的比较</a></li></ul></div></details></div></aside><script>let activeElement,elements;window.addEventListener("DOMContentLoaded",function(){checkTocPosition(),elements=document.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]"),activeElement=elements[0];const t=encodeURI(activeElement.getAttribute("id")).toLowerCase();document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active")},!1),window.addEventListener("resize",function(){checkTocPosition()},!1),window.addEventListener("scroll",()=>{activeElement=Array.from(elements).find(e=>{if(getOffsetTop(e)-window.pageYOffset>0&&getOffsetTop(e)-window.pageYOffset<window.innerHeight/2)return e})||activeElement,elements.forEach(e=>{const t=encodeURI(e.getAttribute("id")).toLowerCase();e===activeElement?document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active"):document.querySelector(`.inner ul li a[href="#${t}"]`).classList.remove("active")})},!1);const main=parseInt(getComputedStyle(document.body).getPropertyValue("--article-width"),10),toc=parseInt(getComputedStyle(document.body).getPropertyValue("--toc-width"),10),gap=parseInt(getComputedStyle(document.body).getPropertyValue("--gap"),10);function checkTocPosition(){const e=document.body.scrollWidth;e-main-toc*2-gap*4>0?document.getElementById("toc-container").classList.add("wide"):document.getElementById("toc-container").classList.remove("wide")}function getOffsetTop(e){if(!e.getClientRects().length)return 0;let t=e.getBoundingClientRect(),n=e.ownerDocument.defaultView;return t.top+n.pageYOffset}</script><div class=post-content><h3 id=基本概念>基本概念<a hidden class=anchor aria-hidden=true href=#基本概念>#</a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>void X_Sort(ElementType A[], int N)
+</span></span></code></pre></td></tr></table></div></div><ul><li>N是正整数</li><li>只讨论基于比较的排序(&lt;、=、>有定义)</li><li>只讨论内部排序</li><li>稳定性：任意两个相等的数据，排序前后的相对位置不发生变化</li><li>没有一种排序是任何情况下都表现最好的</li></ul><h3 id=简单排序>简单排序<a hidden class=anchor aria-hidden=true href=#简单排序>#</a></h3><h5 id=冒泡排序>冒泡排序<a hidden class=anchor aria-hidden=true href=#冒泡排序>#</a></h5><p>每一趟冒泡可以确定至少一个元素的位置，确定一个最大值，也就是说，排序过程中序列尾部是排好序的。冒泡排序是稳定的算法。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Bubble_Sort</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>N</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>P</span><span class=p>,</span><span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>P</span><span class=o>=</span><span class=n>N</span><span class=o>-</span><span class=mi>1</span><span class=p>;</span><span class=n>P</span><span class=o>&gt;=</span><span class=mi>0</span><span class=p>;</span><span class=n>P</span><span class=o>--</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>flag</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span><span class=n>i</span><span class=o>&lt;</span><span class=n>P</span><span class=p>;</span><span class=n>i</span><span class=o>++</span><span class=p>){</span>       <span class=c1>//一趟冒泡
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=k>if</span><span class=p>(</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=o>&gt;</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=o>+</span><span class=mi>1</span><span class=p>]){</span>
+</span></span><span class=line><span class=cl>                <span class=nf>Swap</span><span class=p>(</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>],</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=o>+</span><span class=mi>1</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>                <span class=n>flag</span><span class=o>=</span><span class=mi>1</span><span class=p>;</span>     <span class=c1>//标识发生了交换
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>flag</span><span class=o>==</span><span class=mi>0</span><span class=p>)</span>     <span class=c1>//全程无交换
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>最好情况：顺序 T=O(N)，最坏情况：逆序 T=O(N^2)</p><h5 id=插入排序>插入排序<a hidden class=anchor aria-hidden=true href=#插入排序>#</a></h5><p>从1号元素开始，依次取出元素与其前面的元素比较，将其插入到合适的位置，排序过程中序列前部是排好序的。插入排序是稳定的算法。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Insertion_Sort</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>N</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>P</span><span class=p>,</span><span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>ElementType</span> <span class=n>Tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>P</span><span class=o>=</span><span class=mi>1</span><span class=p>;</span><span class=n>P</span><span class=o>&lt;</span><span class=n>N</span><span class=p>;</span><span class=n>P</span><span class=o>++</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=n>Tmp</span><span class=o>=</span><span class=n>A</span><span class=p>[</span><span class=n>P</span><span class=p>];</span>       <span class=c1>//取出未排序序列中的第一个元素
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=n>P</span><span class=p>;</span><span class=n>i</span><span class=o>&gt;</span><span class=mi>0</span><span class=o>&amp;&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=mi>1</span><span class=p>]</span><span class=o>&gt;</span><span class=n>Tmp</span><span class=p>;</span><span class=n>i</span><span class=o>--</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=o>=</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=mi>1</span><span class=p>];</span>    <span class=c1>//依次与已排序序列中的元素比较并右移
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=o>=</span><span class=n>Tmp</span><span class=p>;</span>       <span class=c1>//放入适合的位置
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>最好情况：顺序 T=O(N)，最坏情况：逆序 T=O(N^2)</p><hr><p>简单排序的平均时间复杂度为O(N^2)。</p><h3 id=希尔排序>希尔排序<a hidden class=anchor aria-hidden=true href=#希尔排序>#</a></h3><p>希尔排序是由Donald Shell提出的，所以叫希尔排序。
+要进行希尔排序，首先要定义增量序列Dm > Dm-1 > ··· > D1 = 1，然后就在待排序列上对每个增量序列Dk进行“Dk-间隔”排序(k=m,m-1,···,1)。其中要注意的是，“Dk-间隔”有序的序列，在执行“Dk-1-间隔”排序后，仍然是“Dk-间隔”有序的。
+那么，希尔排序的关键就是确定增量序列，之后的每个“Dk-间隔”排序就可以采用简单排序来做。</p><ul><li>原始希尔排序 Dm=[N/2], Dk=[Dk+1/2] 向下取整</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Shell_Sort</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>N</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>D</span><span class=o>=</span><span class=n>N</span><span class=o>/</span><span class=mi>2</span><span class=p>;</span><span class=n>D</span><span class=o>&gt;</span><span class=mi>0</span><span class=p>;</span><span class=n>D</span><span class=o>/=</span><span class=mi>2</span><span class=p>){</span>    <span class=c1>//希尔增量序列
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>for</span><span class=p>(</span><span class=n>P</span><span class=o>=</span><span class=n>D</span><span class=p>;</span><span class=n>P</span><span class=o>&lt;</span><span class=n>N</span><span class=p>;</span><span class=n>P</span><span class=o>++</span><span class=p>){</span>   <span class=c1>//插入排序
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>Tmp</span><span class=o>=</span><span class=n>A</span><span class=p>[</span><span class=n>P</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>            <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=n>P</span><span class=p>;</span><span class=n>i</span><span class=o>&gt;=</span><span class=n>D</span><span class=o>&amp;&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=n>D</span><span class=p>]</span><span class=o>&gt;</span><span class=n>Tmp</span><span class=p>;</span><span class=n>i</span><span class=o>-=</span><span class=n>D</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=o>=</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=n>D</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>            <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=o>=</span><span class=n>Tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>最坏情况：T=O(N^2)</p><p>但是这样选取增量序列有个问题，增量元素不互质，那么小增量可能根本不起作用。</p><p>这样也就产生了跟多增量序列</p><ul><li><p>Hibbard增量序列</p><ul><li>Dk=2^k-1 —— 相邻元素互质</li><li>最坏情况：T=O(N^3/2)</li><li>猜想：Tavg=O(N^5/4)</li></ul></li><li><p>Sedgewick增量序列</p><ul><li>{1,5,19,41,109,···} —— 9×4^i-9×2^i+1或4^i-3×2^i+1</li><li>猜想：Tavg=O(N^7/6), Tworst=O(N^4/3)</li></ul></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Shell_Sort</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>N</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//希尔排序 - 用Sedgewick增量序列
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>int</span> <span class=n>Si</span><span class=p>,</span><span class=n>D</span><span class=p>,</span><span class=n>P</span><span class=p>,</span><span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>ElementTypde</span> <span class=n>Tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//只列出一小部分增量
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>int</span> <span class=n>Sedgewick</span><span class=p>[]</span><span class=o>=</span><span class=p>{</span><span class=mi>929</span><span class=p>,</span><span class=mi>505</span><span class=p>,</span><span class=mi>209</span><span class=p>,</span><span class=mi>109</span><span class=p>,</span><span class=mi>41</span><span class=p>,</span><span class=mi>19</span><span class=p>,</span><span class=mi>5</span><span class=p>,</span><span class=mi>1</span><span class=p>,</span><span class=mi>0</span><span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>Si</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span><span class=n>Sedgewick</span><span class=p>[</span><span class=n>Si</span><span class=p>]</span><span class=o>&gt;=</span><span class=n>N</span><span class=p>;</span><span class=n>Si</span><span class=o>++</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=p>;</span>       <span class=c1>//初始的增量Sedgewick[Si]不能超过待排序列的长度，把超过的部分滤除
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>D</span><span class=o>=</span><span class=n>Sedgewick</span><span class=p>[</span><span class=n>Si</span><span class=p>];</span><span class=n>D</span><span class=o>&gt;</span><span class=mi>0</span><span class=p>;</span><span class=n>D</span><span class=o>=</span><span class=n>Sedgewick</span><span class=p>[</span><span class=o>++</span><span class=n>Si</span><span class=p>]){</span>
+</span></span><span class=line><span class=cl>        <span class=k>for</span><span class=p>(</span><span class=n>P</span><span class=o>=</span><span class=n>D</span><span class=p>;</span><span class=n>P</span><span class=o>&lt;</span><span class=n>N</span><span class=p>;</span><span class=n>P</span><span class=o>++</span><span class=p>){</span>       <span class=c1>//插入排序
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>Tmp</span><span class=o>=</span><span class=n>A</span><span class=p>[</span><span class=n>P</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>            <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=n>P</span><span class=p>;</span><span class=n>i</span><span class=o>&gt;=</span><span class=n>D</span><span class=o>&amp;&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=n>D</span><span class=p>]</span><span class=o>&gt;</span><span class=n>Tmp</span><span class=p>;</span><span class=n>i</span><span class=o>-=</span><span class=n>D</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=o>=</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=o>-</span><span class=n>D</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>            <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=o>=</span><span class=n>Tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=堆排序>堆排序<a hidden class=anchor aria-hidden=true href=#堆排序>#</a></h3><p>堆排序是利用最小堆的特性来对待排序列进行排序。</p><ul><li>算法1
+用待排序列中的元素建最小堆，再从堆中返回最小元素到新的数组中，最后把新的排好序的数组复制到原序列中。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Heap_Sort</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>N</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=nf>BuildHeap</span><span class=p>(</span><span class=n>A</span><span class=p>);</span>       <span class=c1>//O(N)
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span><span class=n>i</span><span class=o>&lt;</span><span class=n>N</span><span class=p>;</span><span class=n>i</span><span class=o>++</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>TmpA</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=o>=</span><span class=nf>DeleteMin</span><span class=p>(</span><span class=n>A</span><span class=p>);</span>   <span class=c1>//O(logN)
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span><span class=n>i</span><span class=o>&lt;</span><span class=n>N</span><span class=p>;</span><span class=n>i</span><span class=o>++</span><span class=p>)</span>        <span class=c1>//O(N)
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span><span class=o>=</span><span class=n>TmpA</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>T=O(NlogN)，需要额外O(N)的空间，并且复制元素需要时间。</p><ul><li>算法2
+用待排序列中的元素建最大堆，再对堆直接操作，把根结点最大值和堆的最后一个元素交换，则确定了最大值的位置，然后对其余元素进行调整(下滤)，依次进行上述操作。相比算法1不需要额外的空间。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Swap</span><span class=p>(</span><span class=n>ElementType</span> <span class=o>*</span><span class=n>a</span><span class=p>,</span> <span class=n>ElementType</span> <span class=o>*</span><span class=n>b</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=n>ElementType</span> <span class=n>t</span><span class=o>=*</span><span class=n>a</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>*</span><span class=n>a</span><span class=o>=*</span><span class=n>b</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>*</span><span class=n>b</span><span class=o>=</span><span class=n>t</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>PercDown</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>p</span><span class=p>,</span> <span class=kt>int</span> <span class=n>N</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//改编自堆的下滤操作PrecDown(MaxHeap H, int p)，参考堆的那篇博客
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>//将N个元素的数组中以A[p]为根的子堆调整为最大堆
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>int</span> <span class=n>Parent</span><span class=p>,</span><span class=n>Child</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>ElementType</span> <span class=n>X</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>X</span><span class=o>=</span><span class=n>A</span><span class=p>[</span><span class=n>p</span><span class=p>];</span>     <span class=c1>//取出根结点的值
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>for</span><span class=p>(</span><span class=n>Parent</span><span class=o>=</span><span class=n>p</span><span class=p>;</span><span class=n>Parent</span><span class=o>*</span><span class=mi>2</span><span class=o>+</span><span class=mi>1</span><span class=o>&lt;</span><span class=n>N</span><span class=p>;</span><span class=n>Parent</span><span class=o>=</span><span class=n>Child</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=n>Child</span><span class=o>=</span><span class=n>Parent</span><span class=o>*</span><span class=mi>2</span><span class=o>+</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>((</span><span class=n>Child</span><span class=o>!=</span><span class=n>N</span><span class=o>-</span><span class=mi>1</span><span class=p>)</span><span class=o>&amp;&amp;</span><span class=p>(</span><span class=n>A</span><span class=p>[</span><span class=n>Child</span><span class=p>]</span><span class=o>&lt;</span><span class=n>A</span><span class=p>[</span><span class=n>Child</span><span class=o>+</span><span class=mi>1</span><span class=p>]))</span>
+</span></span><span class=line><span class=cl>            <span class=n>Child</span><span class=o>++</span><span class=p>;</span>    <span class=c1>//Child指向左右子结点的最大者
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>if</span><span class=p>(</span><span class=n>X</span><span class=o>&gt;=</span><span class=n>A</span><span class=p>[</span><span class=n>Child</span><span class=p>])</span>		
+</span></span><span class=line><span class=cl>            <span class=k>break</span><span class=p>;</span>      <span class=c1>//找到了合适位置
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>else</span>
+</span></span><span class=line><span class=cl>            <span class=n>A</span><span class=p>[</span><span class=n>Parent</span><span class=p>]</span><span class=o>=</span><span class=n>A</span><span class=p>[</span><span class=n>Child</span><span class=p>];</span>     <span class=c1>//下滤
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>A</span><span class=p>[</span><span class=n>Parent</span><span class=p>]</span><span class=o>=</span><span class=n>X</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Heap_Sort</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>N</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=n>N</span><span class=o>/</span><span class=mi>2</span><span class=o>-</span><span class=mi>1</span><span class=p>;</span><span class=n>i</span><span class=o>&gt;=</span><span class=mi>0</span><span class=p>;</span><span class=n>i</span><span class=o>--</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=nf>PercDown</span><span class=p>(</span><span class=n>A</span><span class=p>,</span><span class=n>i</span><span class=p>,</span><span class=n>N</span><span class=p>);</span>    <span class=c1>//建最大堆，从最后一个父结点开始往前，依次下滤
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=n>N</span><span class=o>-</span><span class=mi>1</span><span class=p>;</span><span class=n>i</span><span class=o>&gt;</span><span class=mi>0</span><span class=p>;</span><span class=n>i</span><span class=o>--</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=nf>Swap</span><span class=p>(</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]);</span>  <span class=c1>//交换最大值和末尾的值，相当于删除最大堆顶
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=nf>PercDown</span><span class=p>(</span><span class=n>A</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=n>i</span><span class=p>);</span>    <span class=c1>//对剩余子堆进行调整(下滤)
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>堆排序处理N个不同元素的随机排列的平均比较次数是2NlogN-O(NloglogN)。虽然堆排序给出最佳平均复杂度，但实际效果不如用Sedgewick增量序列的希尔排序。</p><h3 id=归并排序>归并排序<a hidden class=anchor aria-hidden=true href=#归并排序>#</a></h3><p>归并排序先将待排序列分成多个序列，每个序列各自排序，最后多个有序序列合并成一个有序序列。归并算法的核心便是<strong>有序子列的归并</strong>。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Merge</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=n>ElementType</span> <span class=n>TmpA</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>L</span><span class=p>,</span> <span class=kt>int</span> <span class=n>R</span><span class=p>,</span> <span class=kt>int</span> <span class=n>RightEnd</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//L=左边起始位置，R=右边起始位置，RightEnd=右边终点位置
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>//将有序的A[L]-A[R-1]和A[R]-A[RightEnd]归并成一个有序序列
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>int</span> <span class=n>LeftEnd</span><span class=p>,</span><span class=n>NumElements</span><span class=p>,</span><span class=n>Tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>LeftEnd</span><span class=o>=</span><span class=n>R</span><span class=o>-</span><span class=mi>1</span><span class=p>;</span>    <span class=c1>//左边重点位置
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>Tmp</span><span class=o>=</span><span class=n>L</span><span class=p>;</span>      <span class=c1>//有序序列的起始位置
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>NumElements</span><span class=o>=</span><span class=n>RightEnd</span><span class=o>-</span><span class=n>L</span><span class=o>+</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>while</span><span class=p>(</span><span class=n>L</span><span class=o>&lt;=</span><span class=n>LeftEnd</span><span class=o>&amp;&amp;</span><span class=n>R</span><span class=o>&lt;=</span><span class=n>RightEnd</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>A</span><span class=p>[</span><span class=n>L</span><span class=p>]</span><span class=o>&lt;=</span><span class=n>A</span><span class=p>[</span><span class=n>R</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>            <span class=n>TmpA</span><span class=p>[</span><span class=n>Tmp</span><span class=o>++</span><span class=p>]</span><span class=o>=</span><span class=n>A</span><span class=p>[</span><span class=n>L</span><span class=o>++</span><span class=p>];</span>     <span class=c1>//将左边元素复制到TmpA
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>else</span>
+</span></span><span class=line><span class=cl>            <span class=n>TmpA</span><span class=p>[</span><span class=n>Tmp</span><span class=o>++</span><span class=p>]</span><span class=o>=</span><span class=n>A</span><span class=p>[</span><span class=n>R</span><span class=o>++</span><span class=p>];</span>     <span class=c1>//将右边元素复制到TmpA
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>while</span><span class=p>(</span><span class=n>L</span><span class=o>&lt;=</span><span class=n>LeftEnd</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>TmpA</span><span class=p>[</span><span class=n>Tmp</span><span class=o>++</span><span class=p>]</span><span class=o>=</span><span class=n>A</span><span class=p>[</span><span class=n>L</span><span class=o>++</span><span class=p>];</span>     <span class=c1>//直接复制左边剩下的
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>while</span><span class=p>(</span><span class=n>R</span><span class=o>&lt;=</span><span class=n>RightEnd</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>TmpA</span><span class=p>[</span><span class=n>Tmp</span><span class=o>++</span><span class=p>]</span><span class=o>=</span><span class=n>A</span><span class=p>[</span><span class=n>R</span><span class=o>++</span><span class=p>];</span>     <span class=c1>//直接复制右边剩下的
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span><span class=n>i</span><span class=o>&lt;</span><span class=n>NumElements</span><span class=p>;</span><span class=n>i</span><span class=o>++</span><span class=p>,</span><span class=n>RightEnd</span><span class=o>--</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=n>A</span><span class=p>[</span><span class=n>RightEnd</span><span class=p>]</span><span class=o>=</span><span class=n>TmpA</span><span class=p>[</span><span class=n>Rightend</span><span class=p>];</span>     <span class=c1>//将有序的TmpA复制回A
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>归并排序有两种实现方式，递归算法和非递归算法。</p><h5 id=递归算法>递归算法<a hidden class=anchor aria-hidden=true href=#递归算法>#</a></h5><p>归并排序的递归算法采用的是<strong>分而治之</strong>的思想。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>MSort</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=n>ElementType</span> <span class=n>TmpA</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>L</span><span class=p>,</span> <span class=kt>int</span> <span class=n>RightEnd</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//核心递归排序函数
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>int</span> <span class=n>Center</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>L</span><span class=o>&lt;</span><span class=n>RightEnd</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=n>Center</span><span class=o>=</span><span class=p>(</span><span class=n>L</span><span class=o>+</span><span class=n>RightEnd</span><span class=p>)</span><span class=o>/</span><span class=mi>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nf>MSort</span><span class=p>(</span><span class=n>A</span><span class=p>,</span> <span class=n>TmpA</span><span class=p>,</span> <span class=n>L</span><span class=p>,</span> <span class=n>Center</span><span class=p>);</span>      <span class=c1>//递归解决左边
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=nf>MSort</span><span class=p>(</span><span class=n>A</span><span class=p>,</span> <span class=n>TmpA</span><span class=p>,</span> <span class=n>Center</span><span class=o>+</span><span class=mi>1</span><span class=p>,</span> <span class=n>RightEnd</span><span class=p>);</span>     <span class=c1>//递归解决右边
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=nf>Merge</span><span class=p>(</span><span class=n>A</span><span class=p>,</span> <span class=n>TmpA</span><span class=p>,</span> <span class=n>L</span><span class=p>,</span> <span class=n>Center</span><span class=o>+</span><span class=mi>1</span><span class=p>,</span> <span class=n>RightEnd</span><span class=p>);</span>  <span class=c1>//合并两段有序序列
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>T=O(NlogN)，是稳定的算法。</p><p>统一函数接口</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Merge_Sort</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>N</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=n>ElementType</span> <span class=o>*</span><span class=n>TmpA</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>TmpA</span><span class=o>=</span><span class=p>(</span><span class=n>ElementType</span> <span class=o>*</span><span class=p>)</span><span class=nf>malloc</span><span class=p>(</span><span class=n>N</span><span class=o>*</span><span class=k>sizeof</span><span class=p>(</span><span class=n>ElementType</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>TmpA</span><span class=o>!=</span><span class=nb>NULL</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=nf>MSort</span><span class=p>(</span><span class=n>A</span><span class=p>,</span> <span class=n>TmpA</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=n>N</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nf>free</span><span class=p>(</span><span class=n>TmpA</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span>
+</span></span><span class=line><span class=cl>        <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;空间不足&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h5 id=非递归算法>非递归算法<a hidden class=anchor aria-hidden=true href=#非递归算法>#</a></h5><p>归并排序的非递归算法由循环实现。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Merge_pass</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=n>ElementType</span> <span class=n>TmpA</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>N</span><span class=p>,</span> <span class=kt>int</span> <span class=n>length</span><span class=p>){</span>    <span class=c1>//length是当前有序子序列的长度
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>//两两归并相邻有序子序列
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>int</span> <span class=n>i</span><span class=p>,</span><span class=n>j</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span><span class=n>i</span><span class=o>&lt;=</span><span class=n>N</span><span class=o>-</span><span class=mi>2</span><span class=o>*</span><span class=n>length</span><span class=p>;</span><span class=n>i</span><span class=o>+=</span><span class=mi>2</span><span class=o>*</span><span class=n>length</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=nf>Merge</span><span class=p>(</span><span class=n>A</span><span class=p>,</span> <span class=n>TmpA</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>i</span><span class=o>+</span><span class=n>length</span><span class=p>,</span> <span class=n>i</span><span class=o>+</span><span class=mi>2</span><span class=o>*</span><span class=n>length</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>i</span><span class=o>+</span><span class=n>length</span><span class=o>&lt;</span><span class=n>N</span><span class=p>)</span>      <span class=c1>//归并最后2个子列
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=nf>Merge</span><span class=p>(</span><span class=n>A</span><span class=p>,</span> <span class=n>TmpA</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>i</span><span class=o>+</span><span class=n>length</span><span class=p>,</span> <span class=n>N</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span>        <span class=c1>//最后只剩1个子列
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=k>for</span><span class=p>(</span><span class=n>j</span><span class=o>=</span><span class=n>i</span><span class=p>;</span><span class=n>j</span><span class=o>&lt;</span><span class=n>N</span><span class=p>;</span><span class=n>j</span><span class=o>++</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>            <span class=n>TmpA</span><span class=p>[</span><span class=n>j</span><span class=p>]</span><span class=o>=</span><span class=n>A</span><span class=p>[</span><span class=n>j</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Merge_Sort</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>N</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>length</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>ElementType</span> <span class=o>*</span><span class=n>TmpA</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>length</span><span class=o>=</span><span class=mi>1</span><span class=p>;</span>       <span class=c1>//初始化子序列长度
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>TmpA</span><span class=o>=</span><span class=p>(</span><span class=n>ElementType</span> <span class=o>*</span><span class=p>)</span><span class=nf>malloc</span><span class=p>(</span><span class=n>N</span><span class=o>*</span><span class=k>sizeof</span><span class=p>(</span><span class=n>ElementType</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>TmpA</span><span class=o>!=</span><span class=nb>NULL</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span><span class=p>(</span><span class=n>length</span><span class=o>&lt;</span><span class=n>N</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>            <span class=nf>Merge_pass</span><span class=p>(</span><span class=n>A</span><span class=p>,</span> <span class=n>TmpA</span><span class=p>,</span> <span class=n>N</span><span class=p>,</span> <span class=n>length</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>length</span><span class=o>*=</span><span class=mi>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=nf>Merge_pass</span><span class=p>(</span><span class=n>TmpA</span><span class=p>,</span> <span class=n>A</span><span class=p>,</span> <span class=n>N</span><span class=p>,</span> <span class=n>length</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>length</span><span class=o>*=</span><span class=mi>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=nf>free</span><span class=p>(</span><span class=n>TmpA</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span>
+</span></span><span class=line><span class=cl>        <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;空间不足&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=快速排序>快速排序<a hidden class=anchor aria-hidden=true href=#快速排序>#</a></h3><p>快速排序采用分而治之的思想，先选取一个主元pivot，比主元小的元素放在前面，而比主元大的元素放在后面。问题就是如何选取主元，这里有个方法是取头、中、尾的中位数，比如8、12、3的中位数是8。另外，如果数据规模较小，快速排序的效率可能还不如插入排序快，所以，当递归的数据规模充分小，则停止递归，直接调用简单排序。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=n>ElementType</span> <span class=nf>Median3</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>Left</span><span class=p>,</span> <span class=kt>int</span> <span class=n>Right</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>Center</span><span class=o>=</span><span class=p>(</span><span class=n>Left</span><span class=o>+</span><span class=n>Right</span><span class=p>)</span><span class=o>/</span><span class=mi>2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>A</span><span class=p>[</span><span class=n>Left</span><span class=p>]</span><span class=o>&gt;</span><span class=n>A</span><span class=p>[</span><span class=n>Center</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>        <span class=nf>Swap</span><span class=p>(</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>Left</span><span class=p>],</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>Center</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>A</span><span class=p>[</span><span class=n>Left</span><span class=p>]</span><span class=o>&gt;</span><span class=n>A</span><span class=p>[</span><span class=n>Right</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>        <span class=nf>Swap</span><span class=p>(</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>Left</span><span class=p>],</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>Right</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>A</span><span class=p>[</span><span class=n>Center</span><span class=p>]</span><span class=o>&gt;</span><span class=n>A</span><span class=p>[</span><span class=n>Right</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>        <span class=nf>Swap</span><span class=p>(</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>Center</span><span class=p>],</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>Right</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>//此时，A[Left]&lt;=A[Center]&lt;=A[Right]
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nf>Swap</span><span class=p>(</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>Center</span><span class=p>],</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>Right</span><span class=o>-</span><span class=mi>1</span><span class=p>]);</span>   <span class=c1>//将基准Pivot藏到右边
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>//只需要考虑A[Left+1],···,A[Right-2]
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=n>A</span><span class=p>[</span><span class=n>Right</span><span class=o>-</span><span class=mi>1</span><span class=p>];</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Qsort</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>Left</span><span class=p>,</span> <span class=kt>int</span> <span class=n>Right</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>Pivot</span><span class=p>,</span><span class=n>Cutoff</span><span class=p>,</span><span class=n>Low</span><span class=p>,</span><span class=n>High</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span><span class=p>(</span><span class=n>Cutoff</span><span class=o>&lt;=</span><span class=n>Right</span><span class=o>-</span><span class=n>Left</span><span class=p>){</span>     <span class=c1>//如果序列元素充分多，则进入快速排序
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>Pivot</span><span class=o>=</span><span class=nf>Median3</span><span class=p>(</span><span class=n>A</span><span class=p>,</span><span class=n>Left</span><span class=p>,</span><span class=n>Right</span><span class=p>);</span>    <span class=c1>//选取主元pivot
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>Low</span><span class=o>=</span><span class=n>Left</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>High</span><span class=o>=</span><span class=n>Right</span><span class=o>-</span><span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span><span class=p>(</span><span class=mi>1</span><span class=p>){</span>   <span class=c1>//将序列中比基准小的移到基准左边，大的移到基准右边
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=k>while</span><span class=p>(</span><span class=n>A</span><span class=p>[</span><span class=o>++</span><span class=n>Low</span><span class=p>]</span><span class=o>&lt;</span><span class=n>Pivot</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=k>while</span><span class=p>(</span><span class=n>A</span><span class=p>[</span><span class=o>--</span><span class=n>High</span><span class=p>]</span><span class=o>&gt;</span><span class=n>Pivot</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span><span class=p>(</span><span class=n>Low</span><span class=o>&lt;</span><span class=n>High</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=nf>Swap</span><span class=p>(</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>Low</span><span class=p>],</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>High</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>            <span class=k>else</span>
+</span></span><span class=line><span class=cl>                <span class=k>break</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=nf>Swap</span><span class=p>(</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>Low</span><span class=p>],</span><span class=o>&amp;</span><span class=n>A</span><span class=p>[</span><span class=n>Right</span><span class=o>-</span><span class=mi>1</span><span class=p>]);</span>  <span class=c1>//将基准放到正确的位置
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=nf>Qsort</span><span class=p>(</span><span class=n>A</span><span class=p>,</span><span class=n>Left</span><span class=p>,</span><span class=n>Low</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>        <span class=c1>//递归解决左边
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=nf>Qsort</span><span class=p>(</span><span class=n>A</span><span class=p>,</span><span class=n>Low</span><span class=o>+</span><span class=mi>1</span><span class=p>,</span><span class=n>Right</span><span class=p>);</span>       <span class=c1>//递归解决右边
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span>
+</span></span><span class=line><span class=cl>        <span class=nf>Insertion_Sort</span><span class=p>(</span><span class=n>A</span><span class=o>+</span><span class=n>Left</span><span class=p>,</span><span class=n>Right</span><span class=o>-</span><span class=n>Left</span><span class=o>+</span><span class=mi>1</span><span class=p>);</span>    <span class=c1>//元素太少，用插入排序
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>Quick_Sort</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>N</span><span class=p>){</span>    <span class=c1>//统一接口
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nf>Qsort</span><span class=p>(</span><span class=n>A</span><span class=p>,</span><span class=mi>0</span><span class=p>,</span><span class=n>N</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>如果pivot选取的好，那么快速排序的时间复杂度为T=O(NlogN)。</p><h3 id=基数排序>基数排序<a hidden class=anchor aria-hidden=true href=#基数排序>#</a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cm>/* 假设元素最多有MaxDigit个关键字，基数全是同样的Radix */</span>
+</span></span><span class=line><span class=cl><span class=cp>#define MaxDigit 4
+</span></span></span><span class=line><span class=cl><span class=cp>#define Radix 10
+</span></span></span><span class=line><span class=cl><span class=cp></span> 
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span> <span class=n>Node</span> <span class=o>*</span><span class=n>PtrToNode</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=k>struct</span> <span class=n>Node</span><span class=p>{</span>    <span class=c1>//桶元素结点
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>int</span> <span class=n>key</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>PtrToNode</span> <span class=n>next</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>struct</span> <span class=n>HeadNode</span><span class=p>{</span>    <span class=c1>//桶头结点
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>PtrToNode</span> <span class=n>head</span><span class=p>,</span> <span class=n>tail</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>};</span>
+</span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=k>struct</span> <span class=n>HeadNode</span> <span class=n>Bucket</span><span class=p>[</span><span class=n>Radix</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>GetDigit</span><span class=p>(</span><span class=kt>int</span> <span class=n>X</span><span class=p>,</span> <span class=kt>int</span> <span class=n>D</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>    <span class=cm>/* 默认次位D=1, 主位D&lt;=MaxDigit */</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>d</span><span class=p>,</span> <span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=mi>1</span><span class=p>;</span> <span class=n>i</span><span class=o>&lt;=</span><span class=n>D</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=n>d</span> <span class=o>=</span> <span class=n>X</span> <span class=o>%</span> <span class=n>Radix</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>X</span> <span class=o>/=</span> <span class=n>Radix</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>d</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>LSDRadixSort</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>N</span><span class=p>){</span>    
+</span></span><span class=line><span class=cl>    <span class=c1>//基数排序-次位优先
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=kt>int</span> <span class=n>D</span><span class=p>,</span> <span class=n>Di</span><span class=p>,</span> <span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>Bucket</span> <span class=n>B</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>PtrToNode</span> <span class=n>tmp</span><span class=p>,</span> <span class=n>p</span><span class=p>,</span> <span class=n>List</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span> 
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span> <span class=n>i</span><span class=o>&lt;</span><span class=n>Radix</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=cm>/* 初始化每个桶为空链表 */</span>
+</span></span><span class=line><span class=cl>        <span class=n>B</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>head</span> <span class=o>=</span> <span class=n>B</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>tail</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span> <span class=n>i</span><span class=o>&lt;</span><span class=n>N</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>){</span> <span class=cm>/* 将原始序列逆序存入初始链表List */</span>
+</span></span><span class=line><span class=cl>        <span class=n>tmp</span> <span class=o>=</span> <span class=p>(</span><span class=n>PtrToNode</span><span class=p>)</span><span class=nf>malloc</span><span class=p>(</span><span class=k>sizeof</span><span class=p>(</span><span class=k>struct</span> <span class=n>Node</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=n>tmp</span><span class=o>-&gt;</span><span class=n>key</span> <span class=o>=</span> <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>        <span class=n>tmp</span><span class=o>-&gt;</span><span class=n>next</span> <span class=o>=</span> <span class=n>List</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>List</span> <span class=o>=</span> <span class=n>tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=cm>/* 下面开始排序 */</span> 
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>D</span><span class=o>=</span><span class=mi>1</span><span class=p>;</span> <span class=n>D</span><span class=o>&lt;=</span><span class=n>MaxDigit</span><span class=p>;</span> <span class=n>D</span><span class=o>++</span><span class=p>){</span> <span class=cm>/* 对数据的每一位循环处理 */</span>
+</span></span><span class=line><span class=cl>        <span class=cm>/* 下面是分配的过程 */</span>
+</span></span><span class=line><span class=cl>        <span class=n>p</span> <span class=o>=</span> <span class=n>List</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span><span class=p>(</span><span class=n>p</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>            <span class=n>Di</span> <span class=o>=</span> <span class=nf>GetDigit</span><span class=p>(</span><span class=n>p</span><span class=o>-&gt;</span><span class=n>key</span><span class=p>,</span> <span class=n>D</span><span class=p>);</span> <span class=cm>/* 获得当前元素的当前位数字 */</span>
+</span></span><span class=line><span class=cl>            <span class=cm>/* 从List中摘除 */</span>
+</span></span><span class=line><span class=cl>            <span class=n>tmp</span> <span class=o>=</span> <span class=n>p</span><span class=p>;</span> <span class=n>p</span> <span class=o>=</span> <span class=n>p</span><span class=o>-&gt;</span><span class=n>next</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=cm>/* 插入B[Di]号桶尾 */</span>
+</span></span><span class=line><span class=cl>            <span class=n>tmp</span><span class=o>-&gt;</span><span class=n>next</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span><span class=p>(</span><span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>head</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>                <span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>head</span> <span class=o>=</span> <span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>tail</span> <span class=o>=</span> <span class=n>tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>else</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>tail</span><span class=o>-&gt;</span><span class=n>next</span> <span class=o>=</span> <span class=n>tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                <span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>tail</span> <span class=o>=</span> <span class=n>tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=cm>/* 下面是收集的过程 */</span>
+</span></span><span class=line><span class=cl>        <span class=n>List</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span> 
+</span></span><span class=line><span class=cl>        <span class=k>for</span><span class=p>(</span><span class=n>Di</span><span class=o>=</span><span class=n>Radix</span><span class=o>-</span><span class=mi>1</span><span class=p>;</span> <span class=n>Di</span><span class=o>&gt;=</span><span class=mi>0</span><span class=p>;</span> <span class=n>Di</span><span class=o>--</span><span class=p>){</span> <span class=cm>/* 将每个桶的元素顺序收集入List */</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span><span class=p>(</span><span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>head</span><span class=p>){</span> <span class=cm>/* 如果桶不为空 */</span>
+</span></span><span class=line><span class=cl>                <span class=cm>/* 整桶插入List表头 */</span>
+</span></span><span class=line><span class=cl>                <span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>tail</span><span class=o>-&gt;</span><span class=n>next</span> <span class=o>=</span> <span class=n>List</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                <span class=n>List</span> <span class=o>=</span> <span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>head</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                <span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>head</span> <span class=o>=</span> <span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>tail</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span> <span class=cm>/* 清空桶 */</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=cm>/* 将List倒入A[]并释放空间 */</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span> <span class=n>i</span><span class=o>&lt;</span><span class=n>N</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=n>tmp</span> <span class=o>=</span> <span class=n>List</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>List</span> <span class=o>=</span> <span class=n>List</span><span class=o>-&gt;</span><span class=n>next</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>]</span> <span class=o>=</span> <span class=n>tmp</span><span class=o>-&gt;</span><span class=n>key</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nf>free</span><span class=p>(</span><span class=n>tmp</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> 
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//基数排序-主位优先
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>MSD</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>L</span><span class=p>,</span> <span class=kt>int</span> <span class=n>R</span><span class=p>,</span> <span class=kt>int</span> <span class=n>D</span><span class=p>){</span> 
+</span></span><span class=line><span class=cl>    <span class=cm>/* 核心递归函数: 对A[L]...A[R]的第D位数进行排序 */</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>Di</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>j</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>Bucket</span> <span class=n>B</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>PtrToNode</span> <span class=n>tmp</span><span class=p>,</span> <span class=n>p</span><span class=p>,</span> <span class=n>List</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span> 
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>D</span><span class=o>==</span><span class=mi>0</span><span class=p>)</span> <span class=k>return</span><span class=p>;</span> <span class=cm>/* 递归终止条件 */</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span> <span class=n>i</span><span class=o>&lt;</span><span class=n>Radix</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=cm>/* 初始化每个桶为空链表 */</span>
+</span></span><span class=line><span class=cl>        <span class=n>B</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>head</span> <span class=o>=</span> <span class=n>B</span><span class=p>[</span><span class=n>i</span><span class=p>].</span><span class=n>tail</span> <span class=o>=</span> <span class=nb>NULL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>i</span><span class=o>=</span><span class=n>L</span><span class=p>;</span> <span class=n>i</span><span class=o>&lt;=</span><span class=n>R</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>){</span> <span class=cm>/* 将原始序列逆序存入初始链表List */</span>
+</span></span><span class=line><span class=cl>        <span class=n>tmp</span> <span class=o>=</span> <span class=p>(</span><span class=n>PtrToNode</span><span class=p>)</span><span class=nf>malloc</span><span class=p>(</span><span class=k>sizeof</span><span class=p>(</span><span class=k>struct</span> <span class=n>Node</span><span class=p>));</span>
+</span></span><span class=line><span class=cl>        <span class=n>tmp</span><span class=o>-&gt;</span><span class=n>key</span> <span class=o>=</span> <span class=n>A</span><span class=p>[</span><span class=n>i</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>        <span class=n>tmp</span><span class=o>-&gt;</span><span class=n>next</span> <span class=o>=</span> <span class=n>List</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>List</span> <span class=o>=</span> <span class=n>tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=cm>/* 下面是分配的过程 */</span>
+</span></span><span class=line><span class=cl>    <span class=n>p</span> <span class=o>=</span> <span class=n>List</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=p>(</span><span class=n>p</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>        <span class=n>Di</span> <span class=o>=</span> <span class=nf>GetDigit</span><span class=p>(</span><span class=n>p</span><span class=o>-&gt;</span><span class=n>key</span><span class=p>,</span> <span class=n>D</span><span class=p>);</span> <span class=cm>/* 获得当前元素的当前位数字 */</span>
+</span></span><span class=line><span class=cl>        <span class=cm>/* 从List中摘除 */</span>
+</span></span><span class=line><span class=cl>        <span class=n>tmp</span> <span class=o>=</span> <span class=n>p</span><span class=p>;</span> <span class=n>p</span> <span class=o>=</span> <span class=n>p</span><span class=o>-&gt;</span><span class=n>next</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=cm>/* 插入B[Di]号桶 */</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>head</span> <span class=o>==</span> <span class=nb>NULL</span><span class=p>)</span> <span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>tail</span> <span class=o>=</span> <span class=n>tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>tmp</span><span class=o>-&gt;</span><span class=n>next</span> <span class=o>=</span> <span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>head</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>head</span> <span class=o>=</span> <span class=n>tmp</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=cm>/* 下面是收集的过程 */</span>
+</span></span><span class=line><span class=cl>    <span class=n>i</span> <span class=o>=</span> <span class=n>j</span> <span class=o>=</span> <span class=n>L</span><span class=p>;</span> <span class=cm>/* i, j记录当前要处理的A[]的左右端下标 */</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span><span class=p>(</span><span class=n>Di</span><span class=o>=</span><span class=mi>0</span><span class=p>;</span> <span class=n>Di</span><span class=o>&lt;</span><span class=n>Radix</span><span class=p>;</span> <span class=n>Di</span><span class=o>++</span><span class=p>){</span> <span class=cm>/* 对于每个桶 */</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span><span class=p>(</span><span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>head</span><span class=p>){</span> <span class=cm>/* 将非空的桶整桶倒入A[], 递归排序 */</span>
+</span></span><span class=line><span class=cl>            <span class=n>p</span> <span class=o>=</span> <span class=n>B</span><span class=p>[</span><span class=n>Di</span><span class=p>].</span><span class=n>head</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>while</span><span class=p>(</span><span class=n>p</span><span class=p>){</span>
+</span></span><span class=line><span class=cl>                <span class=n>tmp</span> <span class=o>=</span> <span class=n>p</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                <span class=n>p</span> <span class=o>=</span> <span class=n>p</span><span class=o>-&gt;</span><span class=n>next</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                <span class=n>A</span><span class=p>[</span><span class=n>j</span><span class=o>++</span><span class=p>]</span> <span class=o>=</span> <span class=n>tmp</span><span class=o>-&gt;</span><span class=n>key</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                <span class=nf>free</span><span class=p>(</span><span class=n>tmp</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=cm>/* 递归对该桶数据排序, 位数减1 */</span>
+</span></span><span class=line><span class=cl>            <span class=nf>MSD</span><span class=p>(</span><span class=n>A</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>j</span><span class=o>-</span><span class=mi>1</span><span class=p>,</span> <span class=n>D</span><span class=o>-</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>i</span> <span class=o>=</span> <span class=n>j</span><span class=p>;</span> <span class=cm>/* 为下一个桶对应的A[]左端 */</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> 
+</span></span><span class=line><span class=cl>    <span class=p>}</span> 
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl> 
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>MSDRadixSort</span><span class=p>(</span><span class=n>ElementType</span> <span class=n>A</span><span class=p>[],</span> <span class=kt>int</span> <span class=n>N</span><span class=p>){</span>  <span class=c1>//统一接口
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nf>MSD</span><span class=p>(</span><span class=n>A</span><span class=p>,</span> <span class=mi>0</span><span class=p>,</span> <span class=n>N</span><span class=o>-</span><span class=mi>1</span><span class=p>,</span> <span class=n>MaxDigit</span><span class=p>);</span> 
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=排序算法的比较>排序算法的比较<a hidden class=anchor aria-hidden=true href=#排序算法的比较>#</a></h3><table><thead><tr><th style=text-align:center>排序算法</th><th style=text-align:center>平均时间复杂度</th><th style=text-align:center>最坏情况下时间复杂度</th><th style=text-align:center>额外空间复杂度</th><th style=text-align:center>稳定性</th></tr></thead><tbody><tr><td style=text-align:center>简单选择排序</td><td style=text-align:center>O(N^2)</td><td style=text-align:center>O(N^2)</td><td style=text-align:center>O(1)</td><td style=text-align:center>不稳定</td></tr><tr><td style=text-align:center>冒泡排序</td><td style=text-align:center>O(N^2)</td><td style=text-align:center>O(N^2)</td><td style=text-align:center>O(1)</td><td style=text-align:center>稳定</td></tr><tr><td style=text-align:center>直接插入排序</td><td style=text-align:center>O(N^2)</td><td style=text-align:center>O(N^2)</td><td style=text-align:center>O(1)</td><td style=text-align:center>稳定</td></tr><tr><td style=text-align:center>希尔排序</td><td style=text-align:center>O(N^d)</td><td style=text-align:center>O(N^2)</td><td style=text-align:center>O(1)</td><td style=text-align:center>不稳定</td></tr><tr><td style=text-align:center>堆排序</td><td style=text-align:center>O(NlogN)</td><td style=text-align:center>O(NlogN)</td><td style=text-align:center>O(1)</td><td style=text-align:center>不稳定</td></tr><tr><td style=text-align:center>快速排序</td><td style=text-align:center>O(NlogN)</td><td style=text-align:center>O(N^2)</td><td style=text-align:center>O(logN)</td><td style=text-align:center>不稳定</td></tr><tr><td style=text-align:center>归并排序</td><td style=text-align:center>O(NlogN)</td><td style=text-align:center>O(NlogN)</td><td style=text-align:center>O(N)</td><td style=text-align:center>稳定</td></tr><tr><td style=text-align:center>基数排序</td><td style=text-align:center>O(P(N+B))</td><td style=text-align:center>O(P(N+B))</td><td style=text-align:center>O(N+B)</td><td style=text-align:center>稳定</td></tr></tbody></table></div><footer class=post-footer><ul class=post-tags><li><a href=https://h-jch.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/>数据结构</a></li></ul><nav class=paginav><a class=prev href=https://h-jch.github.io/posts/code/graph/><span class=title>« Prev</span><br><span>图</span></a>
+<a class=next href=https://h-jch.github.io/posts/code/heap/><span class=title>Next »</span><br><span>堆</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2023 <a href=https://h-jch.github.io>Kei's Blog</a></span>
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg></a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>

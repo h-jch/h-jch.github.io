@@ -1,0 +1,587 @@
+<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Java网络编程笔记 | Kei's Blog</title><meta name=keywords content="java"><meta name=description content="1 IP地址
+使用java的类InetAddress"><meta name=author content="kei"><link rel=canonical href=https://h-jch.github.io/posts/code/study-java-network-programming/><link crossorigin=anonymous href=/assets/css/stylesheet.678b5c47efa744d2e0dd0d61101075e6aecdc9a0631e7ad8538f4ec0cca79273.css integrity="sha256-Z4tcR++nRNLg3Q1hEBB15q7NyaBjHnrYU49OwMynknM=" rel="preload stylesheet" as=style><script defer crossorigin=anonymous src=/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG+9vmJ0cTS+ovo0FeA=" onload=hljs.initHighlightingOnLoad()></script>
+<link rel=icon href=https://h-jch.github.io/images/avatar.png><link rel=icon type=image/png sizes=16x16 href=https://h-jch.github.io/images/avatar.png><link rel=icon type=image/png sizes=32x32 href=https://h-jch.github.io/images/avatar.png><link rel=apple-touch-icon href=https://h-jch.github.io/images/avatar.png><link rel=mask-icon href=https://h-jch.github.io/images/avatar.png><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--hljs-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><meta property="og:title" content="Java网络编程笔记"><meta property="og:description" content="1 IP地址
+使用java的类InetAddress"><meta property="og:type" content="article"><meta property="og:url" content="https://h-jch.github.io/posts/code/study-java-network-programming/"><meta property="og:image" content="https://h-jch.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-07-22T23:08:11+08:00"><meta property="article:modified_time" content="2020-07-22T23:08:11+08:00"><meta property="og:site_name" content="Kei's Blog"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://h-jch.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E"><meta name=twitter:title content="Java网络编程笔记"><meta name=twitter:description content="1 IP地址
+使用java的类InetAddress"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":2,"name":"Posts","item":"https://h-jch.github.io/posts/"},{"@type":"ListItem","position":3,"name":"Java网络编程笔记","item":"https://h-jch.github.io/posts/code/study-java-network-programming/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Java网络编程笔记","name":"Java网络编程笔记","description":"1 IP地址 使用java的类InetAddress\n","keywords":["java"],"articleBody":"1 IP地址 使用java的类InetAddress\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 public class TestInetAddress { public static void main(String[] args) { try { //本机地址 InetAddress inetAddress1 = InetAddress.getByName(\"127.0.0.1\"); System.out.println(inetAddress1); InetAddress inetAddress2 = InetAddress.getByName(\"localhost\"); System.out.println(inetAddress2); InetAddress inetAddress3 = InetAddress.getLocalHost(); System.out.println(inetAddress3); //网站地址 InetAddress inetAddress4 = InetAddress.getByName(\"www.baidu.com\"); System.out.println(inetAddress4); //常用方法 System.out.println(inetAddress4.getAddress()); System.out.println(inetAddress4.getCanonicalHostName()); System.out.println(inetAddress4.getHostAddress()); System.out.println(inetAddress4.getHostName()); } catch (UnknownHostException e) { e.printStackTrace(); } } } 2 端口 端口表示计算机上的程序的一个进程\n0 ~ 65535 不同进程不同端口号，不能冲突 TCP和UDP有各自的端口号，不冲突 1 2 3 4 5 6 7 8 9 10 11 12 public class TestInetSocketAddress { public static void main(String[] args) { InetSocketAddress socketAddress1 = new InetSocketAddress(\"127.0.0.1\", 8080); InetSocketAddress socketAddress2 = new InetSocketAddress(\"localhost\", 8080); System.out.println(socketAddress1); System.out.println(socketAddress2); System.out.println(socketAddress1.getAddress()); System.out.println(socketAddress1.getHostName()); System.out.println(socketAddress1.getPort()); } } 3 通信协议 TCP 连接，稳定 三次握手，四次挥手 客户端与服务端之间 传输完成，释放连接，效率低 UDP 不连接，不稳定 客户端与服务端没有明确的界限 不管有没有准备好都可以发送 4 TCP 客户端\n连接服务器 Socket 发送消息 服务端\n建立服务的端口 ServerSocket 等待用户的连接 accept 接收消息 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 //客户端 public class TcpClientDemo { public static void main(String[] args) { Socket socket = null; OutputStream os = null; try { //获取服务器的地址，端口号 InetAddress serverIP = InetAddress.getByName(\"127.0.0.1\"); int port = 8888; //创建socket连接 socket = new Socket(serverIP, port); //发送消息 os = socket.getOutputStream(); os.write(\"test connection\".getBytes()); } catch (EXception e) { e.printStackTrace(); } finally { if (os != null) { try { os.close(); } catch (IOException e) { e.printStackTrace(); } } if (socket != null) { try { socket.close(); } catch (IOException e) { e.printStackTrace(); } } } } } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 //服务端 public class TcpServerDemo { public static void main(String[] args) { ServerSocket serverSocket = null; Socket socket = null; InputStream is = null; ByteArrayOutputStream baos = null; try { //设定服务器的地址 serverSocket = new ServerSocket(8888); //等待客户端连接 socket = serverSocket.accept(); //读取客户端的消息 is = socket.getInputStream(); //管道流 baos = new ByteArrayOutputStream(); byte[] buffer = new byte[1024]; int len; while ((len = is.read(buffer)) != -1) { baos.write(buffer, 0, len); } System.out.println(baos.toString()); } catch (IOException e) { e.printStackTrace(); } finally { //关闭资源 if (baos != null) { try { baos.close(); } catch (IOException e) { e.printStackTrace(); } } if (is != null) { try { is.close(); } catch (IOException e) { e.printStackTrace(); } } if (socket != null) { try { socket.close(); } catch (IOException e) { e.printStackTrace(); } } if (serverSocket != null) { try { serverSocket.close(); } catch (IOException e) { e.printStackTrace(); } } } } } 5 TCP实现文件上传 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 public class TcpClientDemo { public static void main(String[] args) throws Exception { //创建Socket连接 Socket socket = new Socket(InetAddress.getByName(\"127.0.0.1\"), 9999); //创建输出流 OutputStream os = socket.getOutputStream(); //读取文件 FileInputStream fis = new FileInputStream(new File(\"test.jpg\")); //写出文件 byte[] buffer = new byte[1024]; int len; while ((len = fis.read(buffer)) != -1) { os.write(buffer, 0, len); } //通知服务器传输结束 socket.shutdownOutput(); //确定服务端接收完毕才能断开连接 InputStream is = socket.getInputStream(); ByteArrayOutputStream baos = new ByteArrayOutputStream(); byte[] buffer2 = new byte[1024]; int len2; while ((len2 = is.read(buffer2)) != -1) { baos.write(buffer2, 0, len2); } System.out.println(baos.toString()); //关闭资源 baos.close(); is.close() fis.close(); os.close(); socket.close(); } } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 public class TcpServerDemo { public static void main(String[] args) throws Exception { //创建端口 ServerSocket serverSocket = new ServerSocket(9999); //监听客户端连接 Socket socket = serverSocket.accept();\t//阻塞式监听，会一直等待客户端连接 //获取输入流 InputStream is = socket.getInputStream(); //文件输出 FileOutputStream fos = new FileOutputSteam(new File(\"receive.jpg\")); byte[] buffer = new byte[1024]; int len; while ((len = is.read(buffer)) != -1) { fos.write(buffer, 0, len); } //通知客户端接收完毕 OutputStream os = socket.getOutputStream(); os.write(\"over\".getBytes()); //关闭资源 fos.close(); is.close(); socket.close(); serverSocket.close(); } } 6 UDP UDP没有客户端和服务端区分，这里只是方便显示\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 public class UdpClientDemo { public static void main(String[] args) throws Exception { //建立Socket DatagramSocket socket = new DatagramSocket(); //建个包 String msg = \"test\"; InetAddress ip = InetAddress.getByName(\"127.0.0.1\"); int port = 9000; //数据，数据长度，接收方ip和端口 DatagramPacket packet = new DatagramPacket(msg.getBytes(), 0, msg.getBytes().length, ip, port); //发送包 socket.send(packet); //关闭资源 socket.close(); } } 1 2 3 4 5 6 7 8 9 10 11 12 13 public class UdpServerDemo { public static void main(String[] args) { //开放端口 DatagramSocket socket = new DatagramSocket(9000); //接收数据包 byte[] buffer = new byte[1024]; DatagramPacket packet = new DatagramPacket(buffer, 0, buffer.length); socket.receive(packet); System.out.println(new String(packet.getData(), 0, packet.getLength())); //关闭资源 socket.close(); } } 7 UDP实现聊天 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 public class UdpSenderDemo { public static void main(String[] args) throws Exception { DatagramSocket socket = new DatagramSocket(8888); //准备数据，控制台读取System.in BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)); while (true) { String data = reader.readLine(); byte[] datas = data.getBytes(); DatagramPacket packet = new DatagramPacket(datas, 0, datas.length, new InetSocketAddress(\"127.0.0.1\", 9999)); socket.send(packet); if (data.trim().equals(\"bye\")) { break; } } socket.close(); } } 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 public class UdpReceiveDemo { public static void main(String[] args) throws Exception { DatagramSocket socket = new DatagramSocket(9999); while (true) { //准备接收数据 byte[] container = new byte[1024]; DatagramPacket packet = new DatagramPacket(container, 0, container.length); socket.receive(packet); //断开连接 byte[] data = packet.getData(); String receiveData = new String(data, 0, data.length); System.out.println(receiveData); if (receiveData.trim().equals(\"bye\")) { break; } } } } 如果要实现发送的同时可以接收信息，那么双方都要建立两个线程，一个负责发送，一个负责接收\n8 URL 统一资源定位符\n协议://ip地址:端口/项目名/资源 1 2 3 4 5 6 7 8 9 10 11 public class URLDemo { public static void main(String[] args) throws MalformedURLException { URL url = new URL(\"http://localhost:8080/test/index.html?a=1\u0026b=2\"); System.out.println(url.getProtocol());\t//协议 System.out.println(url.getHost());\t//主机ip System.out.println(url.getPort());\t//端口 System.out.println(url.getPath());\t//文件 System.out.println(url.getFile());\t//全路径 System.out.println(url.getQuery());\t//参数 } } 利用URL下载网络资源\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 public class URLDownload { public static void main(String[] args) throws Exception { URL url = new URL(\"http://localhost:8080/test/test.txt\"); //连接到资源 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection(); InputStream is = urlConnection.getInputStream(); FileOutputStream fos = new FileOutputStream(\"receive.txt\"); byte[] buffer = new byte[1024]; int len; while ((len = is.read(buffer)) != -1) { fos.write(buffer, 0, len); } fos.close(); is.close(); urlConnection.close(); } } ","wordCount":"1665","inLanguage":"en","datePublished":"2020-07-22T23:08:11+08:00","dateModified":"2020-07-22T23:08:11+08:00","author":[{"@type":"Person","name":"kei"}],"mainEntityOfPage":{"@type":"WebPage","@id":"https://h-jch.github.io/posts/code/study-java-network-programming/"},"publisher":{"@type":"Organization","name":"Kei's Blog","logo":{"@type":"ImageObject","url":"https://h-jch.github.io/images/avatar.png"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://h-jch.github.io accesskey=h title="Kei's Blog (Alt + H)"><img src=https://h-jch.github.io/images/avatar.png alt aria-label=logo height=35>Kei's Blog</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://h-jch.github.io/categories/ title=Categories><span>Categories</span></a></li><li><a href=https://h-jch.github.io/tags/ title=Tags><span>Tags</span></a></li><li><a href=https://h-jch.github.io/archives/ title=Archives><span>Archives</span></a></li><li><a href=https://h-jch.github.io/about/ title=About><span>About</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><h1 class=post-title>Java网络编程笔记</h1><div class=post-meta><span title='2020-07-22 23:08:11 +0800 CST'>2020-07-22</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;1665 words&nbsp;·&nbsp;kei</div></header><aside id=toc-container class="toc-container wide"><div class=toc><details open><summary accesskey=c title="(Alt + C)"><span class=details>Table of Contents</span></summary><div class=inner><ul><li><a href=#1-ip%e5%9c%b0%e5%9d%80 aria-label="1 IP地址">1 IP地址</a></li><li><a href=#2-%e7%ab%af%e5%8f%a3 aria-label="2 端口">2 端口</a></li><li><a href=#3-%e9%80%9a%e4%bf%a1%e5%8d%8f%e8%ae%ae aria-label="3 通信协议">3 通信协议</a></li><li><a href=#4-tcp aria-label="4 TCP">4 TCP</a></li><li><a href=#5-tcp%e5%ae%9e%e7%8e%b0%e6%96%87%e4%bb%b6%e4%b8%8a%e4%bc%a0 aria-label="5 TCP实现文件上传">5 TCP实现文件上传</a></li><li><a href=#6-udp aria-label="6 UDP">6 UDP</a></li><li><a href=#7-udp%e5%ae%9e%e7%8e%b0%e8%81%8a%e5%a4%a9 aria-label="7 UDP实现聊天">7 UDP实现聊天</a></li><li><a href=#8-url aria-label="8 URL">8 URL</a></li></ul></div></details></div></aside><script>let activeElement,elements;window.addEventListener("DOMContentLoaded",function(){checkTocPosition(),elements=document.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]"),activeElement=elements[0];const t=encodeURI(activeElement.getAttribute("id")).toLowerCase();document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active")},!1),window.addEventListener("resize",function(){checkTocPosition()},!1),window.addEventListener("scroll",()=>{activeElement=Array.from(elements).find(e=>{if(getOffsetTop(e)-window.pageYOffset>0&&getOffsetTop(e)-window.pageYOffset<window.innerHeight/2)return e})||activeElement,elements.forEach(e=>{const t=encodeURI(e.getAttribute("id")).toLowerCase();e===activeElement?document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active"):document.querySelector(`.inner ul li a[href="#${t}"]`).classList.remove("active")})},!1);const main=parseInt(getComputedStyle(document.body).getPropertyValue("--article-width"),10),toc=parseInt(getComputedStyle(document.body).getPropertyValue("--toc-width"),10),gap=parseInt(getComputedStyle(document.body).getPropertyValue("--gap"),10);function checkTocPosition(){const e=document.body.scrollWidth;e-main-toc*2-gap*4>0?document.getElementById("toc-container").classList.add("wide"):document.getElementById("toc-container").classList.remove("wide")}function getOffsetTop(e){if(!e.getClientRects().length)return 0;let t=e.getBoundingClientRect(),n=e.ownerDocument.defaultView;return t.top+n.pageYOffset}</script><div class=post-content><h2 id=1-ip地址>1 IP地址<a hidden class=anchor aria-hidden=true href=#1-ip地址>#</a></h2><p>使用java的类InetAddress</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>TestInetAddress</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=c1>//本机地址
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>InetAddress</span> <span class=n>inetAddress1</span> <span class=o>=</span> <span class=n>InetAddress</span><span class=o>.</span><span class=na>getByName</span><span class=o>(</span><span class=s>&#34;127.0.0.1&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>inetAddress1</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>InetAddress</span> <span class=n>inetAddress2</span> <span class=o>=</span> <span class=n>InetAddress</span><span class=o>.</span><span class=na>getByName</span><span class=o>(</span><span class=s>&#34;localhost&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>inetAddress2</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>InetAddress</span> <span class=n>inetAddress3</span> <span class=o>=</span> <span class=n>InetAddress</span><span class=o>.</span><span class=na>getLocalHost</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>inetAddress3</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=c1>//网站地址
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>InetAddress</span> <span class=n>inetAddress4</span> <span class=o>=</span> <span class=n>InetAddress</span><span class=o>.</span><span class=na>getByName</span><span class=o>(</span><span class=s>&#34;www.baidu.com&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>inetAddress4</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=c1>//常用方法
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>inetAddress4</span><span class=o>.</span><span class=na>getAddress</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>            <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>inetAddress4</span><span class=o>.</span><span class=na>getCanonicalHostName</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>            <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>inetAddress4</span><span class=o>.</span><span class=na>getHostAddress</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>            <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>inetAddress4</span><span class=o>.</span><span class=na>getHostName</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>UnknownHostException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=2-端口>2 端口<a hidden class=anchor aria-hidden=true href=#2-端口>#</a></h2><p>端口表示计算机上的程序的一个进程</p><ul><li>0 ~ 65535</li><li>不同进程不同端口号，不能冲突</li><li>TCP和UDP有各自的端口号，不冲突</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>TestInetSocketAddress</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>InetSocketAddress</span> <span class=n>socketAddress1</span> <span class=o>=</span> <span class=k>new</span> <span class=n>InetSocketAddress</span><span class=o>(</span><span class=s>&#34;127.0.0.1&#34;</span><span class=o>,</span> <span class=n>8080</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>InetSocketAddress</span> <span class=n>socketAddress2</span> <span class=o>=</span> <span class=k>new</span> <span class=n>InetSocketAddress</span><span class=o>(</span><span class=s>&#34;localhost&#34;</span><span class=o>,</span> <span class=n>8080</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>socketAddress1</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>socketAddress2</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>socketAddress1</span><span class=o>.</span><span class=na>getAddress</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>socketAddress1</span><span class=o>.</span><span class=na>getHostName</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>socketAddress1</span><span class=o>.</span><span class=na>getPort</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=3-通信协议>3 通信协议<a hidden class=anchor aria-hidden=true href=#3-通信协议>#</a></h2><ul><li>TCP<ul><li>连接，稳定</li><li>三次握手，四次挥手</li><li>客户端与服务端之间</li><li>传输完成，释放连接，效率低</li></ul></li><li>UDP<ul><li>不连接，不稳定</li><li>客户端与服务端没有明确的界限</li><li>不管有没有准备好都可以发送</li></ul></li></ul><h2 id=4-tcp>4 TCP<a hidden class=anchor aria-hidden=true href=#4-tcp>#</a></h2><p>客户端</p><ol><li>连接服务器 Socket</li><li>发送消息</li></ol><p>服务端</p><ol><li>建立服务的端口 ServerSocket</li><li>等待用户的连接 accept</li><li>接收消息</li></ol><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>//客户端
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>public</span> <span class=kd>class</span> <span class=nc>TcpClientDemo</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>Socket</span> <span class=n>socket</span> <span class=o>=</span> <span class=kc>null</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>OutputStream</span> <span class=n>os</span> <span class=o>=</span> <span class=kc>null</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=c1>//获取服务器的地址，端口号
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>InetAddress</span> <span class=n>serverIP</span> <span class=o>=</span> <span class=n>InetAddress</span><span class=o>.</span><span class=na>getByName</span><span class=o>(</span><span class=s>&#34;127.0.0.1&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=kt>int</span> <span class=n>port</span> <span class=o>=</span> <span class=n>8888</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>            <span class=c1>//创建socket连接
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>socket</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Socket</span><span class=o>(</span><span class=n>serverIP</span><span class=o>,</span> <span class=n>port</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=c1>//发送消息
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>os</span> <span class=o>=</span> <span class=n>socket</span><span class=o>.</span><span class=na>getOutputStream</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=n>os</span><span class=o>.</span><span class=na>write</span><span class=o>(</span><span class=s>&#34;test connection&#34;</span><span class=o>.</span><span class=na>getBytes</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>EXception</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span> <span class=k>finally</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=o>(</span><span class=n>os</span> <span class=o>!=</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>os</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>IOException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=o>(</span><span class=n>socket</span> <span class=o>!=</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>socket</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>IOException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>//服务端
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>public</span> <span class=kd>class</span> <span class=nc>TcpServerDemo</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>ServerSocket</span> <span class=n>serverSocket</span> <span class=o>=</span> <span class=kc>null</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>Socket</span> <span class=n>socket</span> <span class=o>=</span> <span class=kc>null</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>InputStream</span> <span class=n>is</span> <span class=o>=</span> <span class=kc>null</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>ByteArrayOutputStream</span> <span class=n>baos</span> <span class=o>=</span> <span class=kc>null</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=c1>//设定服务器的地址
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>serverSocket</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ServerSocket</span><span class=o>(</span><span class=n>8888</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=c1>//等待客户端连接
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>socket</span> <span class=o>=</span> <span class=n>serverSocket</span><span class=o>.</span><span class=na>accept</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=c1>//读取客户端的消息
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>is</span> <span class=o>=</span> <span class=n>socket</span><span class=o>.</span><span class=na>getInputStream</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=c1>//管道流
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=n>baos</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ByteArrayOutputStream</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=kt>byte</span><span class=o>[]</span> <span class=n>buffer</span> <span class=o>=</span> <span class=k>new</span> <span class=kt>byte</span><span class=o>[</span><span class=n>1024</span><span class=o>];</span>
+</span></span><span class=line><span class=cl>            <span class=kt>int</span> <span class=n>len</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>            <span class=k>while</span> <span class=o>((</span><span class=n>len</span> <span class=o>=</span> <span class=n>is</span><span class=o>.</span><span class=na>read</span><span class=o>(</span><span class=n>buffer</span><span class=o>))</span> <span class=o>!=</span> <span class=o>-</span><span class=n>1</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>baos</span><span class=o>.</span><span class=na>write</span><span class=o>(</span><span class=n>buffer</span><span class=o>,</span> <span class=n>0</span><span class=o>,</span> <span class=n>len</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>baos</span><span class=o>.</span><span class=na>toString</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>IOException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span> <span class=k>finally</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=c1>//关闭资源
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=k>if</span> <span class=o>(</span><span class=n>baos</span> <span class=o>!=</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>baos</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>IOException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=o>(</span><span class=n>is</span> <span class=o>!=</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>is</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>IOException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=o>(</span><span class=n>socket</span> <span class=o>!=</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>socket</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>IOException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=o>(</span><span class=n>serverSocket</span> <span class=o>!=</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>serverSocket</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>IOException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=5-tcp实现文件上传>5 TCP实现文件上传<a hidden class=anchor aria-hidden=true href=#5-tcp实现文件上传>#</a></h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>TcpClientDemo</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//创建Socket连接
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>Socket</span> <span class=n>socket</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Socket</span><span class=o>(</span><span class=n>InetAddress</span><span class=o>.</span><span class=na>getByName</span><span class=o>(</span><span class=s>&#34;127.0.0.1&#34;</span><span class=o>),</span> <span class=n>9999</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//创建输出流
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>OutputStream</span> <span class=n>os</span> <span class=o>=</span> <span class=n>socket</span><span class=o>.</span><span class=na>getOutputStream</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//读取文件
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>FileInputStream</span> <span class=n>fis</span> <span class=o>=</span> <span class=k>new</span> <span class=n>FileInputStream</span><span class=o>(</span><span class=k>new</span> <span class=n>File</span><span class=o>(</span><span class=s>&#34;test.jpg&#34;</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//写出文件
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=kt>byte</span><span class=o>[]</span> <span class=n>buffer</span> <span class=o>=</span> <span class=k>new</span> <span class=kt>byte</span><span class=o>[</span><span class=n>1024</span><span class=o>];</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>len</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=o>((</span><span class=n>len</span> <span class=o>=</span> <span class=n>fis</span><span class=o>.</span><span class=na>read</span><span class=o>(</span><span class=n>buffer</span><span class=o>))</span> <span class=o>!=</span> <span class=o>-</span><span class=n>1</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>os</span><span class=o>.</span><span class=na>write</span><span class=o>(</span><span class=n>buffer</span><span class=o>,</span> <span class=n>0</span><span class=o>,</span> <span class=n>len</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=c1>//通知服务器传输结束
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>socket</span><span class=o>.</span><span class=na>shutdownOutput</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=c1>//确定服务端接收完毕才能断开连接
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>InputStream</span> <span class=n>is</span> <span class=o>=</span> <span class=n>socket</span><span class=o>.</span><span class=na>getInputStream</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>ByteArrayOutputStream</span> <span class=n>baos</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ByteArrayOutputStream</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=kt>byte</span><span class=o>[]</span> <span class=n>buffer2</span> <span class=o>=</span> <span class=k>new</span> <span class=kt>byte</span><span class=o>[</span><span class=n>1024</span><span class=o>];</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>len2</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=o>((</span><span class=n>len2</span> <span class=o>=</span> <span class=n>is</span><span class=o>.</span><span class=na>read</span><span class=o>(</span><span class=n>buffer2</span><span class=o>))</span> <span class=o>!=</span> <span class=o>-</span><span class=n>1</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>baos</span><span class=o>.</span><span class=na>write</span><span class=o>(</span><span class=n>buffer2</span><span class=o>,</span> <span class=n>0</span><span class=o>,</span> <span class=n>len2</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>baos</span><span class=o>.</span><span class=na>toString</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=c1>//关闭资源
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>baos</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>is</span><span class=o>.</span><span class=na>close</span><span class=o>()</span>
+</span></span><span class=line><span class=cl>        <span class=n>fis</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>os</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>socket</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>TcpServerDemo</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//创建端口
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>ServerSocket</span> <span class=n>serverSocket</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ServerSocket</span><span class=o>(</span><span class=n>9999</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//监听客户端连接
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>Socket</span> <span class=n>socket</span> <span class=o>=</span> <span class=n>serverSocket</span><span class=o>.</span><span class=na>accept</span><span class=o>();</span>	<span class=c1>//阻塞式监听，会一直等待客户端连接
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=c1>//获取输入流
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>InputStream</span> <span class=n>is</span> <span class=o>=</span> <span class=n>socket</span><span class=o>.</span><span class=na>getInputStream</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//文件输出
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>FileOutputStream</span> <span class=n>fos</span> <span class=o>=</span> <span class=k>new</span> <span class=n>FileOutputSteam</span><span class=o>(</span><span class=k>new</span> <span class=n>File</span><span class=o>(</span><span class=s>&#34;receive.jpg&#34;</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>        <span class=kt>byte</span><span class=o>[]</span> <span class=n>buffer</span> <span class=o>=</span> <span class=k>new</span> <span class=kt>byte</span><span class=o>[</span><span class=n>1024</span><span class=o>];</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>len</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=o>((</span><span class=n>len</span> <span class=o>=</span> <span class=n>is</span><span class=o>.</span><span class=na>read</span><span class=o>(</span><span class=n>buffer</span><span class=o>))</span> <span class=o>!=</span> <span class=o>-</span><span class=n>1</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>fos</span><span class=o>.</span><span class=na>write</span><span class=o>(</span><span class=n>buffer</span><span class=o>,</span> <span class=n>0</span><span class=o>,</span> <span class=n>len</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=c1>//通知客户端接收完毕
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>OutputStream</span> <span class=n>os</span> <span class=o>=</span> <span class=n>socket</span><span class=o>.</span><span class=na>getOutputStream</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>os</span><span class=o>.</span><span class=na>write</span><span class=o>(</span><span class=s>&#34;over&#34;</span><span class=o>.</span><span class=na>getBytes</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=c1>//关闭资源
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>fos</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>is</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>socket</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>serverSocket</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=6-udp>6 UDP<a hidden class=anchor aria-hidden=true href=#6-udp>#</a></h2><p>UDP没有客户端和服务端区分，这里只是方便显示</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>UdpClientDemo</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//建立Socket
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>DatagramSocket</span> <span class=n>socket</span> <span class=o>=</span> <span class=k>new</span> <span class=n>DatagramSocket</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//建个包
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>String</span> <span class=n>msg</span> <span class=o>=</span> <span class=s>&#34;test&#34;</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>InetAddress</span> <span class=n>ip</span> <span class=o>=</span> <span class=n>InetAddress</span><span class=o>.</span><span class=na>getByName</span><span class=o>(</span><span class=s>&#34;127.0.0.1&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>port</span> <span class=o>=</span> <span class=n>9000</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//数据，数据长度，接收方ip和端口
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>DatagramPacket</span> <span class=n>packet</span> <span class=o>=</span> <span class=k>new</span> <span class=n>DatagramPacket</span><span class=o>(</span><span class=n>msg</span><span class=o>.</span><span class=na>getBytes</span><span class=o>(),</span> <span class=n>0</span><span class=o>,</span> <span class=n>msg</span><span class=o>.</span><span class=na>getBytes</span><span class=o>().</span><span class=na>length</span><span class=o>,</span> <span class=n>ip</span><span class=o>,</span> <span class=n>port</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//发送包
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>socket</span><span class=o>.</span><span class=na>send</span><span class=o>(</span><span class=n>packet</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//关闭资源
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>socket</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>UdpServerDemo</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//开放端口
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>DatagramSocket</span> <span class=n>socket</span> <span class=o>=</span> <span class=k>new</span> <span class=n>DatagramSocket</span><span class=o>(</span><span class=n>9000</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//接收数据包
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=kt>byte</span><span class=o>[]</span> <span class=n>buffer</span> <span class=o>=</span> <span class=k>new</span> <span class=kt>byte</span><span class=o>[</span><span class=n>1024</span><span class=o>];</span>
+</span></span><span class=line><span class=cl>        <span class=n>DatagramPacket</span> <span class=n>packet</span> <span class=o>=</span> <span class=k>new</span> <span class=n>DatagramPacket</span><span class=o>(</span><span class=n>buffer</span><span class=o>,</span> <span class=n>0</span><span class=o>,</span> <span class=n>buffer</span><span class=o>.</span><span class=na>length</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>socket</span><span class=o>.</span><span class=na>receive</span><span class=o>(</span><span class=n>packet</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=k>new</span> <span class=n>String</span><span class=o>(</span><span class=n>packet</span><span class=o>.</span><span class=na>getData</span><span class=o>(),</span> <span class=n>0</span><span class=o>,</span> <span class=n>packet</span><span class=o>.</span><span class=na>getLength</span><span class=o>()));</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//关闭资源
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>socket</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=7-udp实现聊天>7 UDP实现聊天<a hidden class=anchor aria-hidden=true href=#7-udp实现聊天>#</a></h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>UdpSenderDemo</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>DatagramSocket</span> <span class=n>socket</span> <span class=o>=</span> <span class=k>new</span> <span class=n>DatagramSocket</span><span class=o>(</span><span class=n>8888</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//准备数据，控制台读取System.in
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>BufferedReader</span> <span class=n>reader</span> <span class=o>=</span> <span class=k>new</span> <span class=n>BufferedReader</span><span class=o>(</span><span class=k>new</span> <span class=n>InputStreamReader</span><span class=o>(</span><span class=n>System</span><span class=o>.</span><span class=na>in</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=o>(</span><span class=kc>true</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>String</span> <span class=n>data</span> <span class=o>=</span> <span class=n>reader</span><span class=o>.</span><span class=na>readLine</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=kt>byte</span><span class=o>[]</span> <span class=n>datas</span> <span class=o>=</span> <span class=n>data</span><span class=o>.</span><span class=na>getBytes</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=n>DatagramPacket</span> <span class=n>packet</span> <span class=o>=</span> <span class=k>new</span> <span class=n>DatagramPacket</span><span class=o>(</span><span class=n>datas</span><span class=o>,</span> <span class=n>0</span><span class=o>,</span> <span class=n>datas</span><span class=o>.</span><span class=na>length</span><span class=o>,</span> <span class=k>new</span> <span class=n>InetSocketAddress</span><span class=o>(</span><span class=s>&#34;127.0.0.1&#34;</span><span class=o>,</span> <span class=n>9999</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>            <span class=n>socket</span><span class=o>.</span><span class=na>send</span><span class=o>(</span><span class=n>packet</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=o>(</span><span class=n>data</span><span class=o>.</span><span class=na>trim</span><span class=o>().</span><span class=na>equals</span><span class=o>(</span><span class=s>&#34;bye&#34;</span><span class=o>))</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>break</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=n>socket</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>UdpReceiveDemo</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>DatagramSocket</span> <span class=n>socket</span> <span class=o>=</span> <span class=k>new</span> <span class=n>DatagramSocket</span><span class=o>(</span><span class=n>9999</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=o>(</span><span class=kc>true</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=c1>//准备接收数据
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=kt>byte</span><span class=o>[]</span> <span class=n>container</span> <span class=o>=</span> <span class=k>new</span> <span class=kt>byte</span><span class=o>[</span><span class=n>1024</span><span class=o>];</span>
+</span></span><span class=line><span class=cl>            <span class=n>DatagramPacket</span> <span class=n>packet</span> <span class=o>=</span> <span class=k>new</span> <span class=n>DatagramPacket</span><span class=o>(</span><span class=n>container</span><span class=o>,</span> <span class=n>0</span><span class=o>,</span> <span class=n>container</span><span class=o>.</span><span class=na>length</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>socket</span><span class=o>.</span><span class=na>receive</span><span class=o>(</span><span class=n>packet</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            
+</span></span><span class=line><span class=cl>            <span class=c1>//断开连接
+</span></span></span><span class=line><span class=cl><span class=c1></span>            <span class=kt>byte</span><span class=o>[]</span> <span class=n>data</span> <span class=o>=</span> <span class=n>packet</span><span class=o>.</span><span class=na>getData</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=n>String</span> <span class=n>receiveData</span> <span class=o>=</span> <span class=k>new</span> <span class=n>String</span><span class=o>(</span><span class=n>data</span><span class=o>,</span> <span class=n>0</span><span class=o>,</span> <span class=n>data</span><span class=o>.</span><span class=na>length</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>receiveData</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=o>(</span><span class=n>receiveData</span><span class=o>.</span><span class=na>trim</span><span class=o>().</span><span class=na>equals</span><span class=o>(</span><span class=s>&#34;bye&#34;</span><span class=o>))</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>break</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>如果要实现发送的同时可以接收信息，那么双方都要建立两个线程，一个负责发送，一个负责接收</p><h2 id=8-url>8 URL<a hidden class=anchor aria-hidden=true href=#8-url>#</a></h2><p>统一资源定位符</p><ul><li>协议://ip地址:端口/项目名/资源</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>URLDemo</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>MalformedURLException</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>URL</span> <span class=n>url</span> <span class=o>=</span> <span class=k>new</span> <span class=n>URL</span><span class=o>(</span><span class=s>&#34;http://localhost:8080/test/index.html?a=1&amp;b=2&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>url</span><span class=o>.</span><span class=na>getProtocol</span><span class=o>());</span>	<span class=c1>//协议
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>url</span><span class=o>.</span><span class=na>getHost</span><span class=o>());</span>	<span class=c1>//主机ip
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>url</span><span class=o>.</span><span class=na>getPort</span><span class=o>());</span>	<span class=c1>//端口
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>url</span><span class=o>.</span><span class=na>getPath</span><span class=o>());</span>	<span class=c1>//文件
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>url</span><span class=o>.</span><span class=na>getFile</span><span class=o>());</span>	<span class=c1>//全路径
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>url</span><span class=o>.</span><span class=na>getQuery</span><span class=o>());</span>	<span class=c1>//参数
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>利用URL下载网络资源</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>URLDownload</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>Exception</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>URL</span> <span class=n>url</span> <span class=o>=</span> <span class=k>new</span> <span class=n>URL</span><span class=o>(</span><span class=s>&#34;http://localhost:8080/test/test.txt&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=c1>//连接到资源
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>HttpURLConnection</span> <span class=n>urlConnection</span> <span class=o>=</span> <span class=o>(</span><span class=n>HttpURLConnection</span><span class=o>)</span> <span class=n>url</span><span class=o>.</span><span class=na>openConnection</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=n>InputStream</span> <span class=n>is</span> <span class=o>=</span> <span class=n>urlConnection</span><span class=o>.</span><span class=na>getInputStream</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>FileOutputStream</span> <span class=n>fos</span> <span class=o>=</span> <span class=k>new</span> <span class=n>FileOutputStream</span><span class=o>(</span><span class=s>&#34;receive.txt&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=kt>byte</span><span class=o>[]</span> <span class=n>buffer</span> <span class=o>=</span> <span class=k>new</span> <span class=kt>byte</span><span class=o>[</span><span class=n>1024</span><span class=o>];</span>
+</span></span><span class=line><span class=cl>        <span class=kt>int</span> <span class=n>len</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=o>((</span><span class=n>len</span> <span class=o>=</span> <span class=n>is</span><span class=o>.</span><span class=na>read</span><span class=o>(</span><span class=n>buffer</span><span class=o>))</span> <span class=o>!=</span> <span class=o>-</span><span class=n>1</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>fos</span><span class=o>.</span><span class=na>write</span><span class=o>(</span><span class=n>buffer</span><span class=o>,</span> <span class=n>0</span><span class=o>,</span> <span class=n>len</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        
+</span></span><span class=line><span class=cl>        <span class=n>fos</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>is</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>urlConnection</span><span class=o>.</span><span class=na>close</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div></div><footer class=post-footer><ul class=post-tags><li><a href=https://h-jch.github.io/tags/java/>java</a></li></ul><nav class=paginav><a class=prev href=https://h-jch.github.io/posts/code/study-java-thread/><span class=title>« Prev</span><br><span>Java多线程笔记</span></a>
+<a class=next href=https://h-jch.github.io/posts/code/ssm-integration/><span class=title>Next »</span><br><span>SSM整合配置笔记</span></a></nav></footer></article></main><footer class=footer><span>&copy; 2023 <a href=https://h-jch.github.io>Kei's Blog</a></span>
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg></a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>
