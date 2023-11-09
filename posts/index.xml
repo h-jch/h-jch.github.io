@@ -11,7 +11,16 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 06 Sep 2023 10:57:38 +0800</lastBuildDate><atom:link href="https://h-jch.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 05 Nov 2023 22:24:29 +0800</lastBuildDate><atom:link href="https://h-jch.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从生产环境一次数据库死锁说起</title>
+      <link>https://h-jch.github.io/posts/code/start-with-production-database-deadlock/</link>
+      <pubDate>Sun, 05 Nov 2023 22:24:29 +0800</pubDate>
+      
+      <guid>https://h-jch.github.io/posts/code/start-with-production-database-deadlock/</guid>
+      <description>前言 由于时间问题，先留个坑，后续再填，纯碎记录一下调查过程，虽然最后的结论目前来看是不太对的 背景 上周的一天线上有个接口突然十几个请求同时全部</description>
+    </item>
+    
     <item>
       <title>Java线程池学习</title>
       <link>https://h-jch.github.io/posts/code/thread-pool-executor/</link>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>锁 on Kei&#39;s Blog</title>
+    <link>https://h-jch.github.io/tags/%E9%94%81/</link>
+    <description>Recent content in 锁 on Kei&#39;s Blog</description>
+    <image>
+      <title>Kei&#39;s Blog</title>
+      <url>https://h-jch.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://h-jch.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 05 Nov 2023 22:24:29 +0800</lastBuildDate><atom:link href="https://h-jch.github.io/tags/%E9%94%81/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>从生产环境一次数据库死锁说起</title>
+      <link>https://h-jch.github.io/posts/code/start-with-production-database-deadlock/</link>
+      <pubDate>Sun, 05 Nov 2023 22:24:29 +0800</pubDate>
+      
+      <guid>https://h-jch.github.io/posts/code/start-with-production-database-deadlock/</guid>
+      <description>前言 由于时间问题，先留个坑，后续再填，纯碎记录一下调查过程，虽然最后的结论目前来看是不太对的 背景 上周的一天线上有个接口突然十几个请求同时全部</description>
+    </item>
+    
+  </channel>
+</rss>
