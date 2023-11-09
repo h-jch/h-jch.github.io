@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>springboot on Kei&#39;s Blog</title>
+    <link>https://h-jch.github.io/tags/springboot/</link>
+    <description>Recent content in springboot on Kei&#39;s Blog</description>
+    <image>
+      <title>Kei&#39;s Blog</title>
+      <url>https://h-jch.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://h-jch.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 09 Oct 2023 23:40:49 +0800</lastBuildDate><atom:link href="https://h-jch.github.io/tags/springboot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SpringBoot定时器原理</title>
+      <link>https://h-jch.github.io/posts/code/springboot-scheduled-task/</link>
+      <pubDate>Mon, 09 Oct 2023 23:40:49 +0800</pubDate>
+      
+      <guid>https://h-jch.github.io/posts/code/springboot-scheduled-task/</guid>
+      <description>定时器的基础是ScheduledThreadPoolExecutor ScheduledThreadPoolExecutor ScheduledThreadPoolExecutor类支持周期性任务</description>
+    </item>
+    
+  </channel>
+</rss>

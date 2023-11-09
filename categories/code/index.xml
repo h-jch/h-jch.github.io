@@ -22,6 +22,15 @@
     </item>
     
     <item>
+      <title>SpringBoot定时器原理</title>
+      <link>https://h-jch.github.io/posts/code/springboot-scheduled-task/</link>
+      <pubDate>Mon, 09 Oct 2023 23:40:49 +0800</pubDate>
+      
+      <guid>https://h-jch.github.io/posts/code/springboot-scheduled-task/</guid>
+      <description>定时器的基础是ScheduledThreadPoolExecutor ScheduledThreadPoolExecutor ScheduledThreadPoolExecutor类支持周期性任务</description>
+    </item>
+    
+    <item>
       <title>Java线程池学习</title>
       <link>https://h-jch.github.io/posts/code/thread-pool-executor/</link>
       <pubDate>Wed, 06 Sep 2023 10:57:38 +0800</pubDate>
